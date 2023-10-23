@@ -1,11 +1,18 @@
 import  express  from "express";
 import path from "path";
+import indexRoutes from "./routes/index_route.js";
+import tagRoutes from "./routes/tags_route.js";
+
+
 
 const app = express();
 const port = 3000;
 
-//To procees json files.
+//To wokr with json files.
 app.use(express.json())
+
+app.use(indexRoutes);
+app.use(tagRoutes);
 
 app.listen(port);
 
