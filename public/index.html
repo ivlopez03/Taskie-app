@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="relampago.png" />
+    <script src="app.js"></script>
     <title>Zero Focus</title>
 </head>
 <body>
@@ -15,22 +16,27 @@
             <label>Task:</label>
             <input type="text">
         </div>
-        <div>
+        <div class="addTags">
             <button id="addTags-btn">Add Tags</button>
+            <ul id="tags-list"></ul>
         </div>
     </form>
 
-    <form id="create-tags">
+    <form id="create-tags-form">
         <h3>Create Tags</h3>
         <div>
             <label>Tag:</label>
-            <input type="text">
+            <input type="text" name="tag">
         </div>
         <div>
             <label>Color:</label>
             <input type="color" name="color" >
         </div>
+        <button type="submit" id="createTag-btn">Create Tag</button>
     </form>
     
+    
+    
 </body>
+
 </html>
