@@ -1,5 +1,6 @@
 body{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    
 }
 
 header {
@@ -13,6 +14,7 @@ header {
 
 header #title{
     font-weight: 600;
+    font-size: 25px;
     margin-left: 10px;
 }
 
@@ -95,7 +97,7 @@ header #title{
 .tags-container li{
     font-size: 12px;
     margin-right: 8px;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1px solid transparent;
     padding: 3px;
     margin-top: 4px;
@@ -140,7 +142,12 @@ header #title{
     border-radius: 50%;
     border: 1px solid rgb(119, 119, 119);
   }
-
+.tag-demo{
+    position: relative;
+    margin: 0 auto;
+    width: fit-content;
+    height: 30px;
+}
   .tag-demo p{
     width: fit-content;
     padding: 4px;
@@ -174,11 +181,13 @@ header #title{
 
 .card {
     position: relative;
-    padding: 7px;
+    padding: 3px;
     margin: 15px 10px;
-    border-radius: var(--card_border_radius);
+    border-radius: 4px;
     border: 2px solid #313131;
     overflow: hidden;
+    font-weight: 300;
+    background-color: rgba(255, 255, 255, 0.842);
 }
 .card_small{
     grid-row-end: span var(--card_small);
@@ -188,4 +197,164 @@ header #title{
 }
 .card_large{
     grid-row-end: span var(--card_large);
+}
+
+.card #date{
+    font-size: 13px;
+    color: #5b5b5b;
+}
+.card-header{
+    display: flex;
+  
+}
+.card-header button{
+    position: absolute;
+    right: 0;
+    border: none;
+    padding: 2px;
+    background-color: transparent;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+
+
+
+
+
+
+.modal-container{
+    position: fixed;
+    top: -150px;
+    float: left;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.modal{
+   margin-top: 180px;
+}
+
+.show{
+    pointer-events: auto;
+    opacity: 1;
+    z-index: 1;
+}
+#close-btn{
+    float: right;
+    padding: 4px;
+    margin: 0;
+    border: 0.1px solid #5b5b5b;
+    background-color: tomato;
+    border-radius: 3px;
+}
+#close-btn:hover{
+   border: 0.1px solid #5b5b5b;
+   cursor: pointer;
+}
+
+#close-btn img{
+    position: relative;
+    width: 13px;
+    margin: 0;
+    top: 2px;
+}
+.modal-form {
+    margin: 0 auto;
+    width: 400px;
+    height: 170px;
+    font-weight: 400;
+    padding: 8px;
+    background-color: #ffffff;
+    border-radius: 0px;
+    border: 1px solid #9f9f9f;
+    box-shadow: 0 2px 10px rgb(0, 0, 0,0.3);
+}
+
+
+#create-tags-form{
+    text-align: center;
+    font-weight: 300;
+}
+.modal-form #tagname{
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 2px;
+    
+}
+.modal-form .edit-tag{
+    display: flex;
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.edit-tag input{
+    margin-right: 8px;
+
+}
+.edit-tag label{
+    position:relative;
+    top: 2px;
+}
+
+#createTag-btn{
+    color: white;
+    font-family: system-ui, -apple-system, sans-serif;
+    position: relative;
+    bottom: -10px;
+    padding: 4px;
+    background-color: #0a162e;
+    border-radius: 3px;
+    border: 1px solid rgb(138, 138, 138);
+    cursor: pointer;
+}
+.tagname-initial{
+    margin-top: 20px;
+}
+.menu-open{
+    border: 1px solid #949494;
+    position: absolute;
+    right: 0;
+    top: 25px;
+    margin-right: 2px;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+}
+.menu-options{
+    font-size: 14px;
+    list-style: none;
+    margin: 0;
+    padding: 4px;
+}
+.menu-options li{
+    border: 1px solid transparent;
+    border-radius: 3px;
+
+
+}
+.menu-options li:hover{
+    background-color: #d8d8d86b;
+    cursor: pointer;
+}
+
+.menu-container{
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    margin-right: 3px;
+    cursor: pointer;
+}
+
+.menu-open-checkbox {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    visibility: hidden;
+    
+}
+
+.menu-options li img{
+    width: 12px;
+    margin-right: 4px;
 }

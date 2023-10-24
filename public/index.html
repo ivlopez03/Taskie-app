@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="lamp (3).png" />
-    <script src="app.js"></script>
+    <link rel="shortcut icon" href="no-focus (1).png" />
     <title>Zero Focus</title>
 </head>
 <body>
     <header>
-        <span><img src="lamp (4).png" alt="" style="width: 50px;margin-right: 7px;"></span><h1 id="title">Zero Focus App</h1>
+        <span><img src="no-focus (1).png" alt="" style="width: 40px;margin-right: 7px;"></span><h1 id="title">Zero Focus App</h1>
     </header>
-    <p style="text-align: center;font-weight: 300;font-size: 17px;">ToDo Application with a cool way to create daily tasks.</p>
+    
+    <p style="text-align: center;font-weight: 300;font-size: 16px;">ToDo Application with a cool way to create daily tasks.</p>
     
     <form id="card-form" class="task-form">
         
@@ -30,34 +30,71 @@
         </div>
         
     </div>
+    
 
     <div class="card-container" id="card-container">
+
+    </div>
+    
+    <div class="modal-container" id="modal_container">
+        <div class="modal">
+            <form id="create-tags-form" class="modal-form">
+                <div>
+                    <button id="close-btn" type="reset"><img src="cross.png" alt=""></button>
+                </div>
         
+                <div class="tag-demo" id="pre-tag">
+                    <span>Tag preview</span>
+                </div>
+                <div class="tagname-initial">
+                    <label>Tag:</label>
+                    <input type="text" name="tag" id="tagname"  >
+                </div>
+                <div class="edit-tag">
+                    <label>Backgroud color:</label>
+                    <input type="color" name="background_color" class="input-color" id="backg-color" value="#FFFFFF" >
+                
+                    <label >Border color:</label>
+                    <input type="color" name="border_color" class="input-color" id="bor-color" value="#4197F3">
+                
+                    <label>Text color:</label>
+                    <input type="color" name="text_color" class="input-color" id="text-color" value="#126ABD">
+                </div>
+                <button type="submit" id="createTag-btn">Create</button>
+            </form>
+        </div>
     </div>
 
-    <form id="create-tags-form">
-        <h3>Create Tags</h3>
-        <div class="tag-demo" id="pre-tag"></div>
-        <div>
-            <label>Tag:</label>
-            <input type="text" name="tag" id="tagname" >
-        </div>
-        <div>
-            <label>Backgroud color:</label>
-            <input type="color" name="background_color" class="input-color" id="backg-color" value="#FFFFFF" >
-        </div>
-        <div>
-            <label >Border color:</label>
-            <input type="color" name="border_color" class="input-color" id="bor-color" value="#4197F3">
-        </div>
-        <div>
-            <label>Text color:</label>
-            <input type="color" name="text_color" class="input-color" id="text-color" value="#126ABD">
-        </div>
-        <button type="submit" id="createTag-btn">Create Tag</button>
-    </form>
+
+    
+
+
+
     
     
 </body>
+<script>
+    const open = document.getElementById('addTags-btn');
+    const modal_container = document.getElementById('modal_container');
+    const close = document.getElementById('close-btn');
+    const tag_demo = document.getElementById('pre-tag');
+    
+    open.addEventListener('click', () => {
+      modal_container.classList.add('show');
+      
+    });
+    
+    close.addEventListener('click', () => {
+      modal_container.classList.remove('show');
+      tag_demo.innerHTML = `<span>Tag preview</span>`
+    });
+
+
+
+    
+
+
+</script>
+<script src="app.js"></script>
 
 </html>

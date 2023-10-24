@@ -1,3 +1,36 @@
+const card_type = ['card_small', 'card_medium', 'card_large']
+//card_small = 30 caracteres,card_medium = 100 caracteres,card_large = 211 caracteres
+function getCardSize (value_size){
+    if (value_size >= 0 && value_size < 31){
+        return  card_type[0]
+    }
+    else if (value_size >= 30 && value_size < 125) {
+        return card_type[1]
+    }
+    else if (value_size >= 124 && value_size < 212) {
+        return card_type[2]
+    }
+    else { return card_type[0]}
+
+}
+
+
+
+
+const openMenu = async (cardID)=>{
+    const card_format = `show-menu-${cardID}`
+    const card_menu_format = `menu-open-${cardID}`
+
+    const menuCard = document.getElementById(card_format)
+    const menuOptions = document.getElementById(card_menu_format);
+
+    if(menuCard.checked == true ){
+        menuOptions.style.display = "block";
+    }else{
+        menuOptions.style.display = "none";
+    }
+}
+
 
 
 
@@ -5,16 +38,39 @@ const getTasks = async () => {
     const response = await fetch('/cards')
     const cards = await response.json()
     //Create template to print list of tags
+
     const template = card => `
-    <div class="card card_medium">
-        <div id="date">${card.date}</div>
+    <div class="card ${getCardSize(card.text.length)}">
+        <div class="card-header">
+            <div id="date">${card.date}</div>
+            <label class="menu-container" >
+            <input type="checkbox" id="show-menu-${card._id}" onclick=openMenu('${card._id}') class="menu-open-checkbox" ><img src="menu-puntos.png" style="width:20px"></img></button></input>
+            </label>
+            
+        </div>
+        <div id="menu-open-${card._id}" class="menu-open" style="display:none">
+              <menu class="menu-options" id="menu-options">
+                    <li><img src="play (2).png" >Start</li>
+                    <li><img src="plus-small.png"></img>Add tags</li>
+                    <li><img src="times-hexagon.png"></img>Close Task</li>
+                    <li><img src="file-edit (1).png"></img>Edit</li>
+                    <li><img src="trash (1).png"></img>Delete</li>
+                </menu>
+            </div>
         <p>${card.text}</p>
+        
     </div>
-       
     `
     const cardList = document.getElementById('card-container')
     cardList.innerHTML = cards.map(card => template(card)).join('')
 }
+
+
+
+    
+
+
+
 
 
 const getTagsList = async ()=>{
@@ -42,6 +98,8 @@ const taskFormListener = ()=>{
         const date = new Date(Date.now());//get instance of Date
         const date_format = date.toLocaleDateString(); // format date response
 
+        
+
         const taskForm = {
             "date": date_format,
             "text": getTask,
@@ -57,7 +115,8 @@ const taskFormListener = ()=>{
         })
 
         console.log(taskForm)
-        cardForm.reset()   
+        cardForm.reset()
+        getTasks();   
     }
 
 }
@@ -150,6 +209,7 @@ window.onload = ()=>{
     addFormListener();
     getTasks();
     getTags();
+   
 
     
 }
