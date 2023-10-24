@@ -8,7 +8,7 @@ connect.database_connect;
 const createTag = async (req,res) =>{
     const {body} = req
     try {
-        const new_tag = new Tag({tag: body.tag ,color: body.color})
+        const new_tag = new Tag({tag: body.tag ,background_color: body.background_color,border_color: body.border_color,text_color: body.text_color})
         const saveTag = await new_tag.save();
         console.log(saveTag)
         res.send('Creating tag:' + new_tag._id)

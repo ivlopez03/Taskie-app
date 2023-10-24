@@ -2,16 +2,103 @@ body{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-
-.addTags ul{
+header {
+    position: relative;
+    margin: 0 auto;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+header #title{
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.task-form{
+    margin: 0 auto;
+    margin-top: 30px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+#task-input{
+    padding: 3px;
+    height: 20px;
+    border: 2px solid;
+    border-radius: 3px;
+    outline: none;
+    width: 40%;
+
+}
+
+#createTask-btn{
+    background-color: #000000;    
+    padding: 0px;
+    width: 50px;
+    height: 29.5px;
+    border:2px solid;
+    border-radius: 2px;
+    margin: 0;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 3px;
+    align-items: center;
+}
+#submit-icon{
+    position: relative;
+    padding: 0px;
+    top: 1px;
+}
+
+.tags-nav{
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.tags-nav button{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 3px;
+   
+    
+}
+.tags-nav button img{
+    position: relative;
+    top: 2.5px;
+    margin-left: 3px;
+   
+}
+.tags-nav button:hover{
+   background-color: #0000000a;
+}
+
+
+
+.tags-container{
+    margin-top: 15px;
+    display: flex;
+    
+}
+
+.tags-container ul{
+   display:flex ;
     list-style: none;
     margin:0;
     padding: 0;
+    flex-wrap: wrap;
 }
-.addTags li{
+.tags-container li{
+    font-size: 12px;
     margin-right: 8px;
     border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 3px;
+    margin-top: 4px;
 }
 .tag-container input{
     opacity: 0;
@@ -31,4 +118,74 @@ body{
     height: 15px;
     width:15px;
     background-color: aliceblue;
+}
+
+
+.input-color{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border:none;
+    cursor: pointer;
+    background-color: transparent;
+    
+}
+.input-color::-webkit-color-swatch{
+    border-radius: 50%;
+    border: 1px solid rgb(119, 119, 119);
+}
+.input-color::-moz-color-swatch {
+    border-radius: 50%;
+    border: 1px solid rgb(119, 119, 119);
+  }
+
+  .tag-demo p{
+    width: fit-content;
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+
+  :root {
+    --card_width: 250px;
+    --card_border_radius:16px;
+    --row_increment:10px;
+    --card_small:17;
+    --card_medium:21;
+    --card_large:28;
+}
+
+
+.card-container{
+    margin-top: 40px;
+    padding: 0;
+    width: 80vw;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fill,var(--card_width));
+    grid-auto-rows: var(--row_increment);
+    justify-content: center;
+}
+
+.card {
+    position: relative;
+    padding: 7px;
+    margin: 15px 10px;
+    border-radius: var(--card_border_radius);
+    border: 2px solid #313131;
+    overflow: hidden;
+}
+.card_small{
+    grid-row-end: span var(--card_small);
+}
+.card_medium{
+    grid-row-end: span var(--card_medium);
+}
+.card_large{
+    grid-row-end: span var(--card_large);
 }

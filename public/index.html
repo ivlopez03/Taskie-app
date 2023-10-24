@@ -4,37 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="relampago.png" />
+    <link rel="shortcut icon" href="lamp (3).png" />
     <script src="app.js"></script>
     <title>Zero Focus</title>
 </head>
 <body>
-    <h1>This is Zero Focus App!</h1>
-    <form id="card-form">
-        <h3>Create a new Task</h3>
-        <div>
-            <label>Task:</label>
-            <input type="text">
-        </div>
-        <div class="addTags">
-            <button id="addTags-btn">Add Tags</button>
-            <ul id="tags-list"></ul>
-        </div>
+    <header>
+        <span><img src="lamp (4).png" alt="" style="width: 50px;margin-right: 7px;"></span><h1 id="title">Zero Focus App</h1>
+    </header>
+    <p style="text-align: center;font-weight: 300;font-size: 17px;">ToDo Application with a cool way to create daily tasks.</p>
+    
+    <form id="card-form" class="task-form">
+        
+        <input type="text" name="task" id="task-input" placeholder="Enter your task" required minlength="1" maxlength="211">
+        <button type="submit" id="createTask-btn"><img id="submit-icon" src="angle-right (2).png" alt="" style="width: 15px;"></button>
     </form>
+
+
+    <div class="tags-nav">
+        <button id="addTags-btn">Add Tags <img src="plus (4).png" alt="" style="width: 17px;"></button>
+        <div class="tags-container">
+            <form >
+                <ul id="tags-list"></ul>
+            </form>
+        </div>
+        
+    </div>
+
+    <div class="card-container" id="card-container">
+        
+    </div>
 
     <form id="create-tags-form">
         <h3>Create Tags</h3>
+        <div class="tag-demo" id="pre-tag"></div>
         <div>
             <label>Tag:</label>
-            <input type="text" name="tag">
+            <input type="text" name="tag" id="tagname" >
         </div>
         <div>
-            <label>Color:</label>
-            <input type="color" name="color" >
+            <label>Backgroud color:</label>
+            <input type="color" name="background_color" class="input-color" id="backg-color" value="#FFFFFF" >
+        </div>
+        <div>
+            <label >Border color:</label>
+            <input type="color" name="border_color" class="input-color" id="bor-color" value="#4197F3">
+        </div>
+        <div>
+            <label>Text color:</label>
+            <input type="color" name="text_color" class="input-color" id="text-color" value="#126ABD">
         </div>
         <button type="submit" id="createTag-btn">Create Tag</button>
     </form>
-    
     
     
 </body>

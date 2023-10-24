@@ -15,7 +15,10 @@ export const Card = mongoose.model('Card',{
 //Tags model 
 export const Tag = mongoose.model('Tag',{
     tag:{type: String,required: true},
-    color:{type: String,required: true},
+    background_color:{type: String,required: true},
+    border_color:{type: String,required: true},
+    text_color:{type: String,required:true},
+
 });
 
 export default mongoose;
