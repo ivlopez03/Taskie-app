@@ -31,11 +31,26 @@ const getCards = async (req,res) =>{
 //getCards()
 
 
+const getCardbyID = async (req,res) =>{
+    try {
+        const card = await Card.findById({_id: req.params.id}, 'tags')
+        console.log(card)
+        res.json(card)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send(error.message)
+    }
+    
+}
+
+
 //Edit an existing Card
 const editCard = async (req,res) =>{
-    //const card = await Card.findOneAndUpdate(filter,update,{new: true});
-    //console.log(res);
+    const {body} = req
+    const card = await Card.findOneAndUpdate({_id : body._id},{tags: body.tags});
+    console.log(card);
     res.send('Updating card');
+    console.log(card)
 }
 
 //example:
@@ -54,4 +69,5 @@ export const card = {
     POST: createCard,
     PUT: editCard,
     DELETE: deleteCard,
+    GET_BY_ID: getCardbyID,
 }

@@ -14,28 +14,29 @@
     
     <p style="text-align: center;font-weight: 300;font-size: 16px;">ToDo Application with a cool way to create daily tasks.</p>
     
+    <!-- Todo task input -->
     <form id="card-form" class="task-form">
         
         <input type="text" name="task" id="task-input" placeholder="Enter your task" required minlength="1" maxlength="211">
         <button type="submit" id="createTask-btn"><img id="submit-icon" src="angle-right (2).png" alt="" style="width: 15px;"></button>
     </form>
 
-
+    <!-- Tags Navigation container -->
     <div class="tags-nav">
         <button id="addTags-btn">Add Tags <img src="plus (4).png" alt="" style="width: 17px;"></button>
         <div class="tags-container">
-            <form >
+            <div>
                 <ul id="tags-list"></ul>
-            </form>
+            </div>
         </div>
         
     </div>
     
-
+    <!--Task cards container flexbox -->
     <div class="card-container" id="card-container">
 
     </div>
-    
+    <!-- Add tags preview container -->
     <div class="modal-container" id="modal_container">
         <div class="modal">
             <form id="create-tags-form" class="modal-form">
@@ -54,7 +55,7 @@
                     <label>Backgroud color:</label>
                     <input type="color" name="background_color" class="input-color" id="backg-color" value="#FFFFFF" >
                 
-                    <label >Border color:</label>
+                    <label  >Border color:</label>
                     <input type="color" name="border_color" class="input-color" id="bor-color" value="#4197F3">
                 
                     <label>Text color:</label>
@@ -64,11 +65,6 @@
             </form>
         </div>
     </div>
-
-
-    
-
-
 
     
     
@@ -88,6 +84,7 @@
       modal_container.classList.remove('show');
       tag_demo.innerHTML = `<span>Tag preview</span>`
     });
+
 
 
 

@@ -28,6 +28,11 @@ const getTags = async (req,res) =>{
     console.log(tags)
     res.json(tags);
 }
+const getTagsbyID = async (req,res) =>{
+    const tag = await Tag.findById({_id: req.params.id})
+    console.log(tag)
+    res.json(tag)
+}
 
 
 const deleteTag = async (req,res,filter)=>{
@@ -38,8 +43,10 @@ const deleteTag = async (req,res,filter)=>{
 
 
 
+
 export const tag = {
     GET: getTags,
     POST: createTag,
     DELETE: deleteTag,
+    GET_BY_ID: getTagsbyID
 }

@@ -18,6 +18,7 @@ header #title{
     margin-left: 10px;
 }
 
+/* ____________________________________________ Todo Taks input __*/
 .task-form{
     margin: 0 auto;
     margin-top: 30px; 
@@ -33,7 +34,6 @@ header #title{
     border-radius: 3px;
     outline: none;
     width: 40%;
-
 }
 
 #createTask-btn{
@@ -55,6 +55,7 @@ header #title{
     top: 1px;
 }
 
+/* _____________________________________________ Tags Navigation __*/
 .tags-nav{
     width: 40%;
     margin: 0 auto;
@@ -80,7 +81,6 @@ header #title{
 }
 
 
-
 .tags-container{
     margin-top: 15px;
     display: flex;
@@ -102,6 +102,7 @@ header #title{
     padding: 3px;
     margin-top: 4px;
 }
+
 .tag-container input{
     opacity: 0;
     position: absolute;
@@ -122,7 +123,7 @@ header #title{
     background-color: aliceblue;
 }
 
-
+/* ____________________________________________ menu tags creation __*/
 .input-color{
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -148,14 +149,15 @@ header #title{
     width: fit-content;
     height: 30px;
 }
-  .tag-demo p{
+.tag-demo p{
     width: fit-content;
     padding: 4px;
     border-radius: 8px;
     border: 1px solid transparent;
-  }
+}
 
-  :root {
+/* ____________________________________________ Task cards container flebox __*/
+:root {
     --card_width: 250px;
     --card_border_radius:16px;
     --row_increment:10px;
@@ -217,12 +219,7 @@ header #title{
     margin-right: 5px;
 }
 
-
-
-
-
-
-
+/* ____________________________________________ Menu tags preview  __*/
 .modal-container{
     position: fixed;
     top: -150px;
@@ -230,6 +227,7 @@ header #title{
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
+   
 }
 .modal{
    margin-top: 180px;
@@ -269,6 +267,7 @@ header #title{
     border-radius: 0px;
     border: 1px solid #9f9f9f;
     box-shadow: 0 2px 10px rgb(0, 0, 0,0.3);
+
 }
 
 
@@ -311,6 +310,9 @@ header #title{
 .tagname-initial{
     margin-top: 20px;
 }
+
+
+/* ____________________________________________ Task Cards Submenu __*/
 .menu-open{
     border: 1px solid #949494;
     position: absolute;
@@ -357,4 +359,29 @@ header #title{
 .menu-options li img{
     width: 12px;
     margin-right: 4px;
+}
+
+/* ____________________________________________ Todo Taks input __*/
+.tags-card-cont {
+    display: flexbox;
+    float: left;
+    list-style: none;
+    width: fit-content;
+    border-radius: 3px;
+    flex-wrap: wrap;
+    margin-right: 4px;
+    font-size: 13px;
+    margin-bottom: 3px;
+    border: 1px solid ;
+
+
+}
+
+.tags-card-list{
+    position: absolute;
+    bottom: 0;
+}
+
+.card li{
+    position: relative;
 }
