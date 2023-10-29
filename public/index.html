@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="no-focus (1).png" />
+    <link rel="shortcut icon" href="logo (8).png" />
     <title>Zero Focus</title>
 </head>
 <body>
     <header>
-        <span><img src="no-focus (1).png" alt="" style="width: 40px;margin-right: 7px;"></span><h1 id="title">Zero Focus App</h1>
+        <div>
+            <img src="logo (8).png" alt="" style="width: 60px;margin-right: 7px;border-radius: 6px;">
+        </div>
+        <h1 id="title">Taskie  <span style="font-weight: 400;">フォーカス</span></h1>
     </header>
-    
+    <!--
     <p style="text-align: center;font-weight: 300;font-size: 16px;">ToDo Application with a cool way to create daily tasks.</p>
-    
+    -->
     <!-- Todo task input -->
     <form id="card-form" class="task-form">
         
-        <input type="text" name="task" id="task-input" placeholder="Enter your task" required minlength="1" maxlength="211">
+        <input type="text" name="task" id="task-input" placeholder="Daily task " required minlength="1" maxlength="230">
         <button type="submit" id="createTask-btn"><img id="submit-icon" src="angle-right (2).png" alt="" style="width: 15px;"></button>
     </form>
 
@@ -29,13 +32,24 @@
                 <ul id="tags-list"></ul>
             </div>
         </div>
-        
+        <div class="tag-message" id= "tag-message"></div>
+        <p style="font-weight: 300;font-size: 15px;text-align: center;font-style: italic;color: #7c7c7c;" id="text-drag" class="text-drag" >Assign tags to cards by dragging and dropping them onto the cards.(max. 5 tags per card)</p>
     </div>
-    
+
+    <!--Filter-->
+    <div class="filter-form">
+        <form action="Filter">
+            <label for="">Filter:</label>
+            <input type="checkbox" name="alltasks" id="" checked>All
+            <input type="checkbox" name="Inprogress" id="">In progress
+            <input type="checkbox" name="closed" id="">Closed
+        </form>
+    </div>
+    <div class="empty-message" id="empty-message"></div>
     <!--Task cards container flexbox -->
     <div class="card-container" id="card-container">
-
     </div>
+
     <!-- Add tags preview container -->
     <div class="modal-container" id="modal_container">
         <div class="modal">

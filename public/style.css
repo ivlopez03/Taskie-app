@@ -1,21 +1,21 @@
 body{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    
 }
 
 header {
     position: relative;
     margin: 0 auto;
-    display: flex;
     align-items: center;
+    text-align: center;
     justify-content: center;
     margin-top: 100px;
+    margin-bottom: 50px;
 }
 
 header #title{
-    font-weight: 600;
-    font-size: 25px;
-    margin-left: 10px;
+    font-weight: 700;
+    font-size: 35px;
+    margin:0;
 }
 
 /* ____________________________________________ Todo Taks input __*/
@@ -28,19 +28,20 @@ header #title{
     
 }
 #task-input{
-    padding: 3px;
-    height: 20px;
-    border: 2px solid;
+    padding: 10px;
+    border: 1px solid;
     border-radius: 3px;
     outline: none;
     width: 40%;
+    border-color: #000000;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
 #createTask-btn{
-    background-color: #000000;    
+    background-color: #0f0835d2;    
     padding: 0px;
     width: 50px;
-    height: 29.5px;
+    height: 37.7px;
     border:2px solid;
     border-radius: 2px;
     margin: 0;
@@ -49,6 +50,7 @@ header #title{
     margin-left: 3px;
     align-items: center;
 }
+
 #submit-icon{
     position: relative;
     padding: 0px;
@@ -59,7 +61,8 @@ header #title{
 .tags-nav{
     width: 40%;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 90px;
+    margin-bottom: 40px;
 }
 .tags-nav button{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -67,6 +70,8 @@ header #title{
     background-color: transparent;
     cursor: pointer;
     border-radius: 3px;
+    font-size: 16px;
+    padding: 4px;
    
     
 }
@@ -97,11 +102,13 @@ header #title{
 .tags-container li{
     font-size: 12px;
     margin-right: 8px;
-    border-radius: 6px;
+    border-radius: 3px;
     border: 1px solid transparent;
     padding: 3px;
     margin-top: 4px;
 }
+
+
 
 .tag-container input{
     opacity: 0;
@@ -158,18 +165,16 @@ header #title{
 
 /* ____________________________________________ Task cards container flebox __*/
 :root {
-    --card_width: 250px;
+    --card_width: 280px;
     --card_border_radius:16px;
-    --row_increment:10px;
+    --row_increment:11.5px;
     --card_small:17;
     --card_medium:21;
     --card_large:28;
 }
 
-
 .card-container{
     margin-top: 40px;
-    padding: 0;
     width: 80vw;
     position: absolute;
     left: 50%;
@@ -183,13 +188,20 @@ header #title{
 
 .card {
     position: relative;
-    padding: 3px;
+    padding: 15px;
     margin: 15px 10px;
     border-radius: 4px;
-    border: 2px solid #313131;
+    border: 0px solid #bbbbbb;
     overflow: hidden;
     font-weight: 300;
     background-color: rgba(255, 255, 255, 0.842);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    
+    row-gap: 1em;
+}
+
+.card:hover {
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 .card_small{
     grid-row-end: span var(--card_small);
@@ -266,10 +278,11 @@ header #title{
     background-color: #ffffff;
     border-radius: 0px;
     border: 1px solid #9f9f9f;
-    box-shadow: 0 2px 10px rgb(0, 0, 0,0.3);
+    box-shadow: 1px 1px 3px rgb(0, 0, 0,0.2);
 
 }
 
+#taggie{border-radius: 3px;}
 
 #create-tags-form{
     text-align: center;
@@ -314,15 +327,16 @@ header #title{
 
 /* ____________________________________________ Task Cards Submenu __*/
 .menu-open{
-    border: 1px solid #949494;
+    border: 1px solid #dadada;
     position: absolute;
     right: 0;
     top: 25px;
     margin-right: 2px;
     background-color: white;
     border-radius: 3px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
 }
+
 .menu-options{
     font-size: 14px;
     list-style: none;
@@ -361,7 +375,7 @@ header #title{
     margin-right: 4px;
 }
 
-/* ____________________________________________ Todo Taks input __*/
+/* ____________________________________________ tags card __*/
 .tags-card-cont {
     display: flexbox;
     float: left;
@@ -373,15 +387,44 @@ header #title{
     font-size: 13px;
     margin-bottom: 3px;
     border: 1px solid ;
+    padding: 2px;
 
 
 }
 
 .tags-card-list{
-    position: absolute;
-    bottom: 0;
+    position: relative;
 }
 
 .card li{
     position: relative;
+
+}
+
+/* ____________________________________________ Filter Form __*/
+.filter-form {
+    position: relative;
+    width: 80vw;
+    left: 14%;
+    font-weight: 300;
+}
+
+.empty-message{
+    text-align: center;
+    margin-top: 30px;
+    font-weight: 300;
+    color: #aeaeae;
+}
+.tag-message{
+    text-align: center;
+    margin-top: 30px;
+    font-weight: 300;
+    color: #aeaeae;
+}
+
+.text-drag{
+    opacity: 0;
+}
+.show-message{
+    opacity: 1;
 }

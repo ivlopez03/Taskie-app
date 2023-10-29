@@ -4,13 +4,13 @@
 const card_type = ['card_small', 'card_medium', 'card_large']
 //card_small = 30 caracteres,card_medium = 100 caracteres,card_large = 211 caracteres
 function getCardSize (value_size){
-    if (value_size >= 0 && value_size < 31){
+    if (value_size >= 0 && value_size < 63){
         return  card_type[0]
     }
-    else if (value_size >= 30 && value_size < 125) {
+    else if (value_size >= 63 && value_size < 102) {
         return card_type[1]
     }
-    else if (value_size >= 124 && value_size < 212) {
+    else if (value_size >= 102 && value_size < 230) {
         return card_type[2]
     }
     else { return card_type[0]}
@@ -40,6 +40,10 @@ const getTasks = async () => {
     
     const response = await fetch('/cards')
     const cards = await response.json()
+
+   
+
+
     //Create template to print list of tags
 
     const template = card => `
@@ -56,8 +60,7 @@ const getTasks = async () => {
         <div id="menu-open-${card._id}" class="menu-open" style="display:none">
               <menu class="menu-options" id="menu-options">
                     <li><img src="play (2).png" >Start</li>
-                    <li><img src="plus-small.png"></img>Add tags</li>
-                    <li><img src="times-hexagon.png"></img>Close Task</li>
+                    <li><img src="circle-xmark.png"></img>Close Task</li>
                     <li><img src="file-edit (1).png"></img>Edit</li>
                     <li><img src="trash (1).png"></img>Delete</li>
                 </menu>
@@ -70,6 +73,12 @@ const getTasks = async () => {
     const cardList = document.getElementById('card-container')
     cardList.innerHTML = cards.map(card => template(card)).join('')
 
+    
+    if(cards.length == 0){
+        const message = document.getElementById('empty-message');
+        message.innerHTML = `<p>Hey there! It's a great time to kickstart your day by creating a new task. 🚀 What's on your to-do list?</p>`
+    }
+
    draggendCardActive()
 }
 
@@ -77,16 +86,16 @@ async function getCardTags(){
 
     const response = await fetch('/cards')
     const cards = await response.json()
-    console.log(cards)
+    //console.log(cards)
 
     cards.forEach(async card =>{
         const tagList = document.getElementById(`tags-card-list-${card._id}`)
         tagList.innerHTML = ` `
-        console.log(card._id)
+        //console.log(card._id)
         if(card._id !== null || card._id !== undefined){
             const res = await fetch(`/cards/${card._id}`)
             const tag = await res.json()
-            console.log(tag.tags)
+            //console.log(tag.tags)
             const tagArray = tag.tags
             tagArray.forEach(async tag => {
                 const res_tag = await fetch(`/tags/${tag}`)
@@ -95,7 +104,7 @@ async function getCardTags(){
            
                 const tagList = document.getElementById(`tags-card-list-${card._id}`)
                 tagList.innerHTML += `
-                <li class="tags-card-cont" style="background-color:${tags.background_color};border-color:${tags.border_color};color:${tags.text_color}"  id="${tags._id}" >
+                <li class="tags-card-cont card-id-${card._id}" style="background-color:${tags.background_color};border-color:${tags.border_color};color:${tags.text_color}"  id="${tags._id}" >
                     <label class="tag-container" >${tags.tag}</label>
                 </li>
             `
@@ -113,19 +122,26 @@ async function getCardTags(){
 function draggendCardActive(){
     const container_draggable = document.getElementsByClassName('draggable-container')
     const containersList = Array.from(container_draggable)
- 
 
     containersList.forEach(container => {
         //console.log(container.id)
+        const existingTags = document.getElementsByClassName(`card-id-${container.id}`)
+        //console.log(existingTags)
+
         container.addEventListener('dragover', (e) =>{
             e.preventDefault();
-            //const draggable = document.querySelector('.dragging')
-            //draggable.classList.add(`tag-${container.id}`)
             container.addEventListener('drop', (e) =>{ 
                 e.preventDefault();
+                const existingTagsList = [...existingTags].map(tag => tag.id)
+                //console.log(existingTagsList)
                 const draggable = document.querySelector('.dragging')
                 draggable.classList.add(`tag-${container.id}`)
-                container.appendChild(draggable)
+
+                if(existingTagsList.includes(draggable.id) == false && existingTagsList.length  < 5){
+                    container.appendChild(draggable)
+
+                    
+                }
                 
             })
             
@@ -144,21 +160,25 @@ function draggendCardActive(){
 
 
 async function addTagCard(cardId){
+
     const res = await fetch(`/cards/${cardId}`)
     const tag = await res.json()
     const tagArray = tag.tags
    
     const tags = document.getElementsByClassName(`tag-${cardId}`);
-    console.log(tags)
+    //console.log(tags)
     const newList = tagArray
     let tagList = [...tags].map(tag => tag.id)
 
     tagList.forEach(tag =>{
-        newList.push(tag)
+        if (newList.includes(tag) == false){
+            newList.push(tag)
+        }
+
     })
     
     //console.log(newList)
-    console.log(tagList)
+    //console.log(tagList)
    
    
     const taskForm = {
@@ -229,9 +249,10 @@ const taskFormListener = ()=>{
             }
         })
 
-        console.log(taskForm)
+        //console.log(taskForm)
         cardForm.reset()
-        getTasks();   
+        getTasks();  
+        getCardTags(); 
     }
 
 }
@@ -240,6 +261,10 @@ const taskFormListener = ()=>{
 const getTags = async () => {
     const response = await fetch('/tags')
     const tags = await response.json()
+
+    
+
+
     //Create template to print list of tags
     const template = tag => `
         <li draggable="true"  style="background-color:${tag.background_color};border-color:${tag.border_color};color:${tag.text_color}" class="draggable" id="${tag._id}" >
@@ -248,6 +273,15 @@ const getTags = async () => {
     `
     const tagList = document.getElementById('tags-list')
     tagList.innerHTML = tags.map(tag => template(tag)).join('')
+
+    
+    if(tags.length == 0){
+        const message = document.getElementById('tag-message');
+        message.innerHTML = `<p>Add custom tags</p>`
+    }else{
+        const text = document.getElementById('text-drag')
+        text.classList.add('show-message')
+    }
 
     draggActive()
 }
@@ -265,9 +299,10 @@ async function draggActive(){
             console.log('drag start')
         })
 
-        draggable.addEventListener('dragend', () => {
+        draggable.addEventListener('dragend', (e) => {
+            e.preventDefault();
             draggable.classList.remove('dragging')
-            
+            getTags();
         })
     })
     
@@ -318,7 +353,7 @@ const addFormListener = ()=>{
         //instance Form Data,Then we extract values in object format from the obtained form data.
         const formData = new FormData(tagForm)
         const tags_data = Object.fromEntries(formData.entries())
-        console.log(tags_data)
+        //console.log(tags_data)
         await fetch('/tags',{
             method: 'POST',
             body: JSON.stringify(tags_data),
