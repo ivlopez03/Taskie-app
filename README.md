@@ -6,7 +6,7 @@
 
 # Taskie フォーカス
 
-##### ToDo Application with a cool way to create your tasks.
+### ToDo Web Application with a cool way to create your tasks.
 > This open source version does not include all the files that the production website is actually using.
 It contains much of the design and functionality, about 90% of the actual code.
 
@@ -16,7 +16,7 @@ It contains much of the design and functionality, about 90% of the actual code.
 
 ![image](https://github.com/ivlopez03/ZeroFocus-App/assets/111618970/79bf2918-18e6-4de6-9c27-3307cd65e096)
 
-### Features:
+# 🔥Features:
 - Topic tags customizable system
 - Drag && Drop tags for adding to cards
 - Cards editables
@@ -24,7 +24,7 @@ It contains much of the design and functionality, about 90% of the actual code.
 - Filter by tags or status
 - Login/signup
 
-#### Upcoming features:
+# 🚀Upcoming features:
 - Card expandible
 - Notion API Integration
 
