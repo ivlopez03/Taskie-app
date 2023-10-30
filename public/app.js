@@ -1,5 +1,3 @@
-
-
 let tags_array = [] ;
 
 async function renderTags(tags_array){
@@ -10,6 +8,29 @@ async function renderTags(tags_array){
     })
     draggActive()
 }
+
+async function renderTagsCard(card){
+    const response = await fetch(`/cards/${card}`)
+    //fetch to get card by its id 
+    const cards = await response.json()
+    const tag_array = cards.tags //Get tags array from card json
+    const tagList = document.getElementById(`tags-card-list-${card}`)
+    tagList.innerHTML = ` `
+    // foreach to go through tags and return them into the html card.    
+    tag_array.forEach(async tag => {
+        const response = await fetch(`/tags/${tag}`)
+        const tags = await response.json()
+        tagList.innerHTML += `
+            <li class="tags-card-cont card-id-${card}" style="background-color:${tags.background_color};border-color:${tags.border_color};color:${tags.text_color}"  id="${tags._id}" >
+                <label class="tag-container" >${tags.tag}</label>
+            </li>
+        `
+    })
+    const tags_dropped = document.querySelector(`.tag-${card}`)
+    tags_dropped.parentNode.removeChild(tags_dropped)
+}
+
+
 
 //_______________________________________________________________________________________CARD SUBMENU OPTIONS______.
 //Function to display submenu options for each card.
@@ -129,29 +150,6 @@ const getCardTags = async  (cards) => {
         })
     })
 }
-
-async function renderTagsCard(card){
-    const response = await fetch(`/cards/${card}`)
-    //fetch to get card by its id 
-    const cards = await response.json()
-    const tag_array = cards.tags //Get tags array from card json
-    const tagList = document.getElementById(`tags-card-list-${card}`)
-    tagList.innerHTML = ` `
-    // foreach to go through tags and return them into the html card.    
-    tag_array.forEach(async tag => {
-        const response = await fetch(`/tags/${tag}`)
-        const tags = await response.json()
-        tagList.innerHTML += `
-            <li class="tags-card-cont card-id-${card}" style="background-color:${tags.background_color};border-color:${tags.border_color};color:${tags.text_color}"  id="${tags._id}" >
-                <label class="tag-container" >${tags.tag}</label>
-            </li>
-        `
-    })
-    const tags_dropped = document.querySelector(`.tag-${card}`)
-    tags_dropped.parentNode.removeChild(tags_dropped)
-}
-
-
 
 
 //___________________________________________________________SAVE CARD TAGS IN DATABASE AFTER DRAG & DROP ACTION ___.
