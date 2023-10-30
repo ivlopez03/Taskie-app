@@ -1,29 +1,14 @@
 
+let task_cards_array =[];
+let tag_cards_array = [];
+let tags_array = [];
 
 
-const card_type = ['card_small', 'card_medium', 'card_large']
-//card_small = 30 caracteres,card_medium = 100 caracteres,card_large = 211 caracteres
-function getCardSize (value_size){
-    if (value_size >= 0 && value_size < 63){
-        return  card_type[0]
-    }
-    else if (value_size >= 63 && value_size < 102) {
-        return card_type[1]
-    }
-    else if (value_size >= 102 && value_size < 230) {
-        return card_type[2]
-    }
-    else { return card_type[0]}
-
-}
-
-
-
-
+//CARD SUBMENU OPTIONS----------------------------------------------------------------
+//Function to display submenu options for each card.
 const openMenu = async (cardID)=>{
     const card_format = `show-menu-${cardID}`
     const card_menu_format = `menu-open-${cardID}`
-
     const menuCard = document.getElementById(card_format)
     const menuOptions = document.getElementById(card_menu_format);
 
@@ -33,19 +18,16 @@ const openMenu = async (cardID)=>{
         menuOptions.style.display = "none";
     }
 }
+//------------------------------------------------------------------------------------
 
 
-
+// getTasks() Function to get task from database and return html elements in order to display them.
 const getTasks = async () => {
-    
+    //Create request to the API with fetch
     const response = await fetch('/cards')
-    const cards = await response.json()
-
-   
-
-
-    //Create template to print list of tags
-
+    const cards = await response.json() //get response in json format.
+    console.log(cards)
+    //Create HTML template to print list of taks
     const template = card => `
     <div class="card ${getCardSize(card.text.length)}  draggable-container  card-${card._id}" id="${card._id}">
         <div class="card-header ">
@@ -59,17 +41,16 @@ const getTasks = async () => {
         <div id="tags-card-list-${card._id}" class="tags-card-list"></div>
         <div id="menu-open-${card._id}" class="menu-open" style="display:none">
               <menu class="menu-options" id="menu-options">
-                    <li><img src="play (2).png" >Start</li>
-                    <li><img src="circle-xmark.png"></img>Close Task</li>
-                    <li><img src="file-edit (1).png"></img>Edit</li>
-                    <li><img src="trash (1).png"></img>Delete</li>
+                    <li><img src="play (4).png" >Start</li>
+                    <li><img src="cross (1).png"></img>Close Task</li>
+                    <li><img src="file-edit (3).png"></img>Edit</li>
+                    <li><img src="trash (3).png"></img>Delete</li>
                 </menu>
         </div>
-        
-        
-        
     </div>
     `
+
+
     const cardList = document.getElementById('card-container')
     cardList.innerHTML = cards.map(card => template(card)).join('')
 
@@ -374,12 +355,40 @@ const addFormListener = ()=>{
 
 
 
+
+
+
+
+const card_type = ['card_small', 'card_medium', 'card_large']
+//Function for assigning size values to cards. 
+function getCardSize (value_size){
+    if (value_size >= 0 && value_size < 63){
+        return  card_type[0]
+    }
+    else if (value_size >= 63 && value_size < 102) {
+        return card_type[1]
+    }
+    else if (value_size >= 102 && value_size < 230) {
+        return card_type[2]
+    }
+    else { return card_type[0]}
+
+}
+
+
+
+
+
+
+
+
+//Wait until window is loaded and then run the callback.
 window.onload = ()=>{
+
     taskFormListener();
     addFormListener();
     getTasks();
     getTags();
     getCardTags();
-
-    
+  
 }
