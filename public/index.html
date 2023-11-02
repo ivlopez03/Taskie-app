@@ -27,9 +27,12 @@
         <button type="submit" id="createTask-btn"><img id="submit-icon" src="angle-right (2).png" alt="" style="width: 15px;"></button>
     </form>
 
+    <div class="delete-message" id="delete-message"> </div>
+
     <!-- Tags Navigation container -->
     <div class="tags-nav">
         <button id="addTags-btn">Add Tags <img src="plus (4).png" alt="" style="width: 17px;"></button>
+        <div class="delete-tag-container" id="delete-tag-container"><img src="trash (4).png" alt=""></div>
         <div class="tags-container">
             <div>
                 <ul id="tags-list"></ul>
@@ -38,6 +41,12 @@
         <div class="tag-message" id= "tag-message"></div>
         <p style="font-weight: 300;font-size: 15px;text-align: center;font-style: italic;color: #7c7c7c;" id="text-drag" class="text-drag" >Assign tags to cards by dragging and dropping them onto the cards.(max. 5 tags per card)</p>
     </div>
+
+    <div class="started-task-box" id="started-task">
+        <span >In progress</span>
+        <img src="dogrun.gif" alt="" width="25px"> 
+    </div>
+    
 
     <!--Filter-->
     <div class="filter-form">
@@ -66,7 +75,7 @@
                 </div>
                 <div class="tagname-initial">
                     <label>Tag:</label>
-                    <input type="text" name="tag" id="tagname"  >
+                    <input type="text" name="tag" id="tagname"  required minlength="1" maxlength="25">
                 </div>
                 <div class="edit-tag">
                     <label>Backgroud color:</label>
@@ -102,6 +111,40 @@
       tag_demo.innerHTML = `<span>Tag preview</span>`
     });
 
+    const container_draggable = document.getElementById('delete-tag-container')
+    
+
+    container_draggable.addEventListener('dragover', (e) =>{
+        e.preventDefault();
+        const tag = document.querySelector('.dragging')
+        tag.style.opacity = 0
+        container_draggable.style.transform = 'scale(1.2)'
+       
+
+    })
+
+    const container_draggable_delete = document.getElementById('delete-tag-container')
+    
+
+    container_draggable_delete.addEventListener('dragover', (e) =>{
+        e.preventDefault();
+        container_draggable.style.transform = 'scale(1.2)'   
+        container_draggable.style.backgroundColor = '#cccccc58'
+        container_draggable.style.borderRadius = '4px'
+    })
+    
+    container_draggable_delete.addEventListener('drop', (e) =>{ 
+        e.preventDefault();
+        container_draggable.style.transform = 'scale(1)'
+        container_draggable.style.removeProperty('background-color')
+        container_draggable.style.borderRadius = '4px'
+        const tag = document.querySelector('.dragging')
+        console.log(tag)
+        deleteTagsCard(tag.id)
+        getTasks()
+        
+        
+    })
 
 
 

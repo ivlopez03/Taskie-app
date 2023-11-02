@@ -29,16 +29,38 @@ const getTags = async (req,res) =>{
     res.json(tags);
 }
 const getTagsbyID = async (req,res) =>{
-    const tag = await Tag.findById({_id: req.params.id})
-    console.log(tag)
-    res.json(tag)
+    try {
+        const tag = await Tag.findById({_id: req.params.id})
+        if(tag == null ){
+            res.sendStatus(204)
+        }else{
+            console.log(tag)
+            res.json(tag)
+            res.status(200)
+        }
+    } catch (error) {
+        res.status(404).send(error.message)
+    }
+    
 }
 
 
-const deleteTag = async (req,res,filter)=>{
-    //const tag = await Tag.findOneAndDelete(filter);
-    //console.log('The card has been deleted : ' + tag)
-    res.send('Deleting tag')
+const deleteTag = async (req,res,)=>{
+    try {
+        const tag = await Tag.findOne({_id: req.params.id})
+        console.log(tag)
+        if (tag  == null) {
+            res.sendStatus(204)
+        } else {
+            await Tag.deleteOne(tag)
+            res.status(200).send(`the tag ${tag._id} was deleted`)
+            console.log(`the tag ${tag._id} was deleted`)
+        }
+    } catch (error) {
+        res.status(404).send(error.message)
+        
+    }
+    
 }
 
 
