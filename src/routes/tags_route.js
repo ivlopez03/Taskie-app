@@ -9,5 +9,6 @@ router.get('/tags',tag.GET);
 router.post('/tags',tag.POST);
 router.delete('/tags/:id',tag.DELETE);
 router.get('/tags/:id',tag.GET_BY_ID);
+router.put('/tags/:id',tag.UPDATE);
 
 export default router

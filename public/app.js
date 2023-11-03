@@ -8,7 +8,7 @@ async function renderTags(tags_array){
     tagList.innerHTML = ` `
     
     tags_array.forEach(tag =>{
-        console.log(tag)
+        //console.log(tag)
         tagList.innerHTML += tag
     })   
     
@@ -141,7 +141,7 @@ const getTags = async () => {
     tags.forEach(tag =>{
        tags_array.push(template(tag))
     })
-    console.log(tags_array)
+    //console.log(tags_array)
 
     //Callback to add draggable effect to tags
     draggActive()
@@ -159,20 +159,29 @@ const getCardTags = async  (cards) => {
         //fetch to get card by its id 
         const cards = await res.json()
         const tag_array = cards.tags //Get tags array from card json
-
-        // foreach to go through tags and return them into the html card.    
-        tag_array.forEach(async tag => {
-            const response = await fetch(`/tags/${tag}`)
-            if(response.status != 204){
+        console.log(`This is the tag array: ${tag_array}`)
+        if(tag_array.length > 0){
+            // foreach to go through tags and return them into the html card.    
+            tag_array.forEach(async tag => {
+            
+                const response = await fetch(`/tags/${tag}`)
                 const tags = await response.json()
-                const tagList = document.getElementById(`tags-card-list-${card._id}`)
-                tagList.innerHTML += `
-                <li class="tags-card-cont card-id-${card._id}" style="background-color:${tags.background_color};border-color:${tags.border_color};color:${tags.text_color};"  id="${tags._id}" >
-                    <label class="tag-container" style="cursor:auto;" >${tags.tag}</label>
-                </li>
-            `     
-            }
-        })
+                if(tags != null){
+
+                    console.log(`tag:${tags.tag}`)
+                    const tagList = document.getElementById(`tags-card-list-${card._id}`)
+                    tagList.innerHTML += `
+                        <li class="tags-card-cont card-id-${card._id}" style="background-color:${tags.background_color};border-color:${tags.border_color};color:${tags.text_color};"  id="${tags._id}" >
+                            <label class="tag-container" style="cursor:auto;" >${tags.tag}</label>
+                        </li>
+                    `   
+                }
+              
+                
+            })
+
+        }
+
     })
 }
 
@@ -215,29 +224,45 @@ async function addTagCard(cardId){
 //___________________________________________________________________________________________________DELETE TAGS FROM NAVIGATION__.
 const deleteTagsCard = async (tagID)=>{
     const message_container =document.getElementById('delete-message'); 
-    const message = 'Are you sure you want to delete the tag?'
-    if(confirm(message)== true){
-        await fetch(`/tags/${tagID}`,{
-            method: 'DELETE'
-        }).then(() => {
-            message_container.innerHTML = `<p>The tag has been deleted successfully.</p>`
-            setTimeout(function(){
-                message_container.innerHTML = '';
-            }, 2000);
+    await fetch(`/tags/${tagID}`,{
+        method: 'DELETE'
+    }).then(() => {
+        message_container.innerHTML = `<p>The tag has been deleted successfully.</p>`
+        setTimeout(function(){
+            message_container.innerHTML = '';
+        }, 3000);
 
-            getTags()
+        getTags()
 
-        }).then(() => {
-            //PUT METHOD
+    }).then(async () => {
+        const tag_deleted = tagID
+        const response = await fetch('/cards')
+        const cards = await response.json()
+        cards.forEach(async card =>{
+            const res = await fetch(`/cards/${card._id}`)
+            //fetch to get card by its id 
+            const cards = await res.json()
+            let tagList = cards.tags
+            //console.log(tag_deleted)
+            //console.log(tagList)
+            if(tagList.includes(tag_deleted) == true){
+                const new_tagList = tagList.filter(tag => tag != tag_deleted)
+                //console.log(new_tagList)
+                const tagUpdate = {
+                    "tags": new_tagList
+                }
+
+                await fetch(`/cards/${card._id}`,{
+                    method: 'PUT',
+                    body: JSON.stringify(tagUpdate),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+            }
         })
 
-    }else{
-        message_container.innerHTML = `<p>Tag deletion has been canceled.</p>`
-            setTimeout(function(){
-                message_container.innerHTML = '';
-            }, 2000);
-            getTags()
-    }
+    })
     
 }
 
@@ -306,6 +331,7 @@ const addTagsFormListener = ()=>{
 
     tagForm.onsubmit = async (e) => {
         e.preventDefault();
+        const tag_demo = document.getElementById('pre-tag');
         //instance Form Data,Then we extract values in object format from the obtained form data.
         const formData = new FormData(tagForm)
         const tags_data = Object.fromEntries(formData.entries())
@@ -318,6 +344,7 @@ const addTagsFormListener = ()=>{
             }
         })
         tagForm.reset()
+        tag_demo.innerHTML = `<span>Tag preview</span>`
         getTags()  
     }
 

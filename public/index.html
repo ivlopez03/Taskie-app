@@ -27,7 +27,7 @@
         <button type="submit" id="createTask-btn"><img id="submit-icon" src="angle-right (2).png" alt="" style="width: 15px;"></button>
     </form>
 
-    <div class="delete-message" id="delete-message"> </div>
+    <div class="delete-message" id="delete-message"></div>
 
     <!-- Tags Navigation container -->
     <div class="tags-nav">
@@ -42,11 +42,12 @@
         <p style="font-weight: 300;font-size: 15px;text-align: center;font-style: italic;color: #7c7c7c;" id="text-drag" class="text-drag" >Assign tags to cards by dragging and dropping them onto the cards.(max. 5 tags per card)</p>
     </div>
 
+    <!--
     <div class="started-task-box" id="started-task">
         <span >In progress</span>
         <img src="dogrun.gif" alt="" width="25px"> 
     </div>
-    
+    -->
 
     <!--Filter-->
     <div class="filter-form">
@@ -142,7 +143,6 @@
         console.log(tag)
         deleteTagsCard(tag.id)
         getTasks()
-        
         
     })
 
