@@ -73,7 +73,7 @@ header #title{
     cursor: pointer;
     border-radius: 3px;
     font-size: 16px;
-    padding: 4px;
+    padding: 4px 8px;
    
     
 }
@@ -206,7 +206,7 @@ header #title{
 }
 
 .card-container{
-    margin-top: 20px;
+    margin-top: 5px;
     width: 80vw;
     position: absolute;
     left: 50%;
