@@ -46,20 +46,24 @@ const getCardbyID = async (req,res) =>{
 
 //Edit an existing Card
 const editCard = async (req,res) =>{
-    const {body} = req
-    const card = await Card.findOneAndUpdate({_id : body._id},{tags: body.tags});
+    const{id} = req.params
+    const card = await Card.findOne({_id:id});
+    Object.assign(card, req.body)
+    card.save()
     console.log(card);
-    res.send('Updating card');
-    console.log(card)
+    res.sendStatus(200)
 }
 
 //example:
 //editCard({text:'Hello Karla'},{tags:['UI/UX']});
 
 const deleteCard = async (req,res,filter)=>{
-    //const card = await Card.findOneAndDelete(filter);
-    //console.log('The card has been deleted : ' + card)
-    res.send('Deleting card')
+    const{id} = req.params
+    const card = await Card.findOne({_id:id})
+    if(card){
+        card.remove()
+    }
+    res.sendStatus(204)
 }
 
 //deleteCard({text:'Hello Karla'});

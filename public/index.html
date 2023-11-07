@@ -8,12 +8,13 @@
     <title>Zero Focus</title>
 </head>
 <body>
+    <div class="card-deleted-message show" id="card-deleted-message"></div>
     <div>
         <p style="text-align: end;padding: 0px 60px;"><img src="user (2).png" alt="user" style="width: 13px;"><span style="margin-left: 8px;">Ivan Lopez</span></p>
     </div>
     <header>
         <div>
-            <img src="logo (8).png" alt="" style="width: 60px;margin-right: 7px;border-radius: 6px;">
+            <img src="logo (8).png" alt="logo" style="width: 60px;margin-right: 7px;border-radius: 6px;">
         </div>
         <h1 id="title">Taskie  <span style="font-weight: 400;">フォーカス</span></h1>
     </header>
@@ -24,44 +25,52 @@
     <form id="card-form" class="task-form">
         
         <input type="text" name="task" id="task-input" placeholder="Daily task " required minlength="1" maxlength="230">
-        <button type="submit" id="createTask-btn"><img id="submit-icon" src="angle-right (2).png" alt="" style="width: 15px;"></button>
+        <button type="submit" id="createTask-btn"><img id="submit-icon" src="angle-right (2).png" alt="create task" style="width: 15px;"></button>
     </form>
 
-    <div class="delete-message" id="delete-message"> </div>
+    <div class="delete-message" id="delete-message"></div>
+   
 
     <!-- Tags Navigation container -->
     <div class="tags-nav">
-        <button id="addTags-btn">Add Tags <img src="plus (4).png" alt="" style="width: 17px;"></button>
-        <div class="delete-tag-container" id="delete-tag-container"><img src="trash (4).png" alt=""></div>
+        <button id="addTags-btn">Add Tags <img src="plus-small.png" alt="" style="width: 17px;"></button>
+        <div class="delete-tag-container" id="delete-tag-container"><img src="trash (5).png" alt=""></div>
+        <div class="delete-drop-message" id="delete-drop-message">
+            <p>Drag n drop tags here to remove them</p>
+            <img src="curved-arrow.png" alt="">
+        </div>
         <div class="tags-container">
             <div>
                 <ul id="tags-list"></ul>
             </div>
         </div>
-        <div class="tag-message" id= "tag-message"></div>
-        <p style="font-weight: 300;font-size: 15px;text-align: center;font-style: italic;color: #7c7c7c;" id="text-drag" class="text-drag" >Assign tags to cards by dragging and dropping them onto the cards.(max. 5 tags per card)</p>
     </div>
-
-    <div class="started-task-box" id="started-task">
-        <span >In progress</span>
-        <img src="dogrun.gif" alt="" width="25px"> 
-    </div>
+    <div class="tag-message" id= "tag-message">
     
-
-    <!--Filter-->
-    <div class="filter-form">
-        <form action="Filter">
-            <label for="">Filter:</label>
-            <input type="checkbox" name="alltasks" id="" checked>All
-            <input type="checkbox" name="Inprogress" id="">In progress
-            <input type="checkbox" name="closed" id="">Closed
-        </form>
     </div>
+
+    
+    <!--Filter-->
+    
+   
     <div class="empty-message" id="empty-message"></div>
     <!--Task cards container flexbox -->
     <div class="card-container" id="card-container">
     </div>
 
+    <div class="confirm-container" id="confirm-container">
+        <div class="confirm">
+            <form id="delete-card-form" class="confirm-form">
+                <p style="font-weight: 700;font-size: 14px;margin: 0;">Confirm Deletion</p>
+                <hr>
+                <p>Are you sure you want to delete this item? This action cannot be undone."</p>
+                <div class="btn-container">
+                    <button id="cancel-deletion-btn" class="confirm-form-btn delete-btn">Cancel</button>
+                    <button id="confirm-deletion-btn" class="confirm-form-btn confirm-btn">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <!-- Add tags preview container -->
     <div class="modal-container" id="modal_container">
         <div class="modal">
@@ -92,7 +101,7 @@
         </div>
     </div>
 
-    
+
     
 </body>
 <script>
@@ -100,6 +109,7 @@
     const modal_container = document.getElementById('modal_container');
     const close = document.getElementById('close-btn');
     const tag_demo = document.getElementById('pre-tag');
+
     
     open.addEventListener('click', () => {
       modal_container.classList.add('show');
@@ -137,14 +147,18 @@
         e.preventDefault();
         container_draggable.style.transform = 'scale(1)'
         container_draggable.style.removeProperty('background-color')
-        container_draggable.style.borderRadius = '4px'
         const tag = document.querySelector('.dragging')
         console.log(tag)
         deleteTagsCard(tag.id)
         getTasks()
-        
+
         
     })
+
+    container_draggable_delete.addEventListener('dragleave', (e) =>{
+        container_draggable.style.transform = 'scale(1)'
+        container_draggable.style.removeProperty('background-color')
+    });	
 
 
 

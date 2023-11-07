@@ -1,7 +1,22 @@
+:root {
+    --card_width: 280px;
+    --card_border_radius:16px;
+    --row_increment:11.5px;
+    --card_small:17;
+    --card_medium:21;
+    --card_large:28;
+    --gradient:  linear-gradient(45deg, #e80033, #f9a852, #f69653, #f38654, #f07654, #ed6856, #ef5956, #ee4c58, #56c1ab);
+    --gradientdos: linear-gradient(30deg, #eeaeca,#e9afcc,#e2b0ce,#d7b2d2,#cbb4d6,#bfb5da,#b6b6dd,#aeb7e0,#a5b8e3,#9eb9e6);
+    --gradienttres: linear-gradient(30deg,rgba(238,174,202,1) 0%, rgba(158,185,230,1) 50%,rgba(238,174,202,1) 100%)
+}
+
 body{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    overflow-x:hidden;
+    
+    margin: 0;
 }
+
+
 
 header {
     position: relative;
@@ -39,7 +54,7 @@ header #title{
 }
 
 #createTask-btn{
-    background-color: #0f0835d2;    
+    background-color: #000000;    
     padding: 0px;
     width: 50px;
     height: 37.7px;
@@ -64,7 +79,8 @@ header #title{
     width: 40%;
     margin: 0 auto;
     margin-top: 70px;
-    margin-bottom: 40px;
+    margin-bottom: 0px;
+    height: 125px;
 }
 .tags-nav button{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -73,7 +89,7 @@ header #title{
     cursor: pointer;
     border-radius: 3px;
     font-size: 16px;
-    padding: 4px;
+    padding: 4px 8px;
    
     
 }
@@ -90,8 +106,10 @@ header #title{
 
 
 .tags-container{
+    position: absolute;
     margin-top: 15px;
     display: flex;
+    
     
 }
 
@@ -149,17 +167,67 @@ header #title{
     position: absolute;
     width: 100%;
     margin-top: 30px;
+
 }
 .delete-message p{
     position: relative;
     margin: 0 auto;
     width: fit-content;
     padding: 2px 5px;
+    font-size: 15px;
+    color: black;
     font-weight: 300;
-    font-size: 12px;
-    border: 1px solid #b9b9b9;
-    box-shadow: -3px -3px 0px 0px rgba(0, 0, 0, 0.7);
+
+
 }
+
+.tag-message{
+    padding: 3px 5px;
+    width: fit-content;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 0;
+}
+.tag-message p{
+    font-size: 15px;
+    color: black;
+    margin: 0;
+    text-align: center;
+    font-weight: 500;
+}
+#message{
+    position: relative;
+    top: -90px;
+    color: #aeaeae;
+    font-weight: 300;
+}
+
+.delete-drop-message{
+    position: relative;
+    width: fit-content;
+    float: right;
+    left: 300px;
+    top: -60px;
+    
+   
+    
+}
+.delete-drop-message p{
+    font-weight: 500;
+    font-size: 15px;
+    word-break: break-all;
+}
+.delete-drop-message img{
+    width: 30px;
+    transform: scaleX(-1);
+    margin-left: 20px;
+}
+.text-drag img{
+    position: relative;
+    top: 40px;
+    right: 20px;
+}
+
 /* ____________________________________________ menu tags creation __*/
 .input-color{
     -webkit-appearance: none;
@@ -194,17 +262,9 @@ header #title{
 }
 
 /* ____________________________________________ Task cards container flebox __*/
-:root {
-    --card_width: 280px;
-    --card_border_radius:16px;
-    --row_increment:11.5px;
-    --card_small:17;
-    --card_medium:21;
-    --card_large:28;
-}
 
 .card-container{
-    margin-top: 20px;
+    margin-top: 5px;
     width: 80vw;
     position: absolute;
     left: 50%;
@@ -269,6 +329,7 @@ header #title{
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
+    margin-left: 20px;
    
 }
 .modal{
@@ -407,6 +468,33 @@ header #title{
     margin-right: 4px;
 }
 
+.started-task{
+    position: fixed;
+    width: fit-content;
+    background-color: #000000;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    margin: 0 ;
+    padding: 2px 6px;
+    background-image: var(--gradienttres);
+    animation: fondo-anim 10s infinite alternate;
+    background-size: 400%;
+
+}
+@keyframes fondo-anim{
+    0%{background-position: left;} /*por defecto*/
+    100%{background-position: right;}
+}
+
+.started-task p{
+    font-weight: 600;
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+
+}
+
 /* ____________________________________________ tags card __*/
 .tags-card-cont {
     display: flexbox;
@@ -417,7 +505,7 @@ header #title{
     flex-wrap: wrap;
     margin-right: 4px;
     font-size: 13px;
-    margin-bottom: 0px;
+    margin-bottom: 2px;
     border: 1px solid ;
     padding: 2px;
    
@@ -444,17 +532,10 @@ header #title{
 
 .empty-message{
     text-align: center;
-    margin-top: 30px;
+    margin-top: 70px;
     font-weight: 300;
     color: #aeaeae;
     margin-bottom: 50px;
-}
-.tag-message{
-    text-align: center;
-    margin-top: 30px;
-    font-weight: 300;
-    color: #aeaeae;
-    
 }
 
 .text-drag{
@@ -485,3 +566,137 @@ header #title{
     top: -10px;
 }
 
+/*__________________________________________________delete confirm box_____ */
+
+.confirm-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+   
+}
+.confirm{
+   margin-top: 180px;
+}
+.confirm-form{
+    margin: 0 auto;
+    width: fit-content;
+    height: 100px;
+    padding: 15px;
+    background-color: #fbfbfb;
+    border-radius: 4px;
+    box-shadow: 0 4px 5px rgb(0, 0, 0,0.3);
+    border: 3px solid #949494;
+}
+.show{
+    pointer-events: auto;
+    opacity: 1;
+    z-index: 1;
+}
+.btn-container{
+    position: relative;
+    float: right;
+}
+.confirm-form-btn{
+    border-style: none;
+    border-radius: 4px;
+    margin-left: 8px;
+    padding: 3px 6px;
+    cursor: pointer;
+}
+
+.confirm-btn{
+    border: 1px solid rgb(31, 162, 255);
+    background-color: white;
+    color: rgb(31, 162, 255);
+    transition: ease-in-out 0.2s;
+}
+.confirm-btn:hover{
+    background-color: rgb(31, 162, 255);
+    color: white;
+    border: 1px solid transparent;
+}
+.delete-btn{
+    border: 1px solid transparent;
+    background-color: rgb(197, 68, 46);
+    color: white;
+}
+
+.card-deleted-message{
+    position: fixed;
+    margin-top: 25px;
+    width: 100%;
+}
+.card-deleted-message p{
+    background-color: rgb(31, 162, 255);
+    margin: 0 auto;
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+    padding: 5px 8px;
+    font-size: 14px;
+    font-weight: 500;
+    width: fit-content;
+    font-weight: 500;
+}
+
+
+
+
+
+@media only screen and (max-width: 1040px) and (min-width: 551px) {
+    .delete-drop-message{
+        position: relative;
+        width: 155px;
+        float: right;
+        left: 190px;
+        top: -70px;
+        
+    }
+    .text-drag img{
+        position: relative;
+        top: 80px;
+        right: 20px;
+    }
+
+}
+
+
+@media only screen and (max-width: 550px){
+
+    .delete-drop-message{
+        position: absolute;
+        width: 155px;
+        right: 0;
+        top: 400px;
+    }
+    .delete-drop-message p{
+        font-size: 12px;
+        text-align: center;
+    }
+    .delete-drop-message img{
+        margin-left: 90px;
+        width: 20px;
+        transform: none;
+       
+    }
+    .tag-message p{
+        font-size: 12px;
+    }
+    .text-drag img{
+        position: relative;
+        top: 80px;
+        left: 230px;
+        transform:scaleX(-1);
+    }
+    .tags-nav{
+        width: 80%;
+    }
+    .tag-message{
+        width: 100%;
+    }
+
+}
