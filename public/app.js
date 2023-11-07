@@ -2,6 +2,8 @@
 
 let tags_array = [] ;
 
+console.log(tags_array)
+
 async function renderTags(tags_array){
     console.log('renderizar tags')
     const tagList = document.getElementById('tags-list')
@@ -11,11 +13,27 @@ async function renderTags(tags_array){
         //console.log(tag)
         tagList.innerHTML += tag
     })   
+    console.log(tags_array)
+    if(tags_array.length == 0){
+        const message = document.getElementById('tag-message');
+        message.innerHTML = `<p id="message">Add custom tags</p>`
+        const text = document.getElementById('text-drag')
+        text.classList.remove('show-message')
+    }
     
     
     
     draggActive()
 }
+
+const renderInitialMessage = async () =>{
+    let message = document.getElementById('delete-drop-message')
+    setTimeout(function(){
+        message.innerHTML = ``
+    }, 10000);
+}
+
+
 
 async function renderTagsCard(card){
     const tags_dropped = document.querySelector(`.tag-${card}`)
@@ -57,6 +75,34 @@ const openMenu = async (cardID)=>{
     }
 }
 
+async function startTask(cardID){
+    const started_task = document.getElementById(`card-header-${cardID}`);
+    const card_menu_format = `menu-open-${cardID}`
+    const menuOptions = document.getElementById(card_menu_format);
+    started_task.innerHTML += `<div id="${cardID}"  class="started-task">
+                                    <p>IN PROGRESS</p>
+                                </div>`
+
+    menuOptions.style.display = "none";
+
+    const card = {
+        "active": true
+    }
+
+    //fetch to edit database with the new tags added by dragging and dropping;
+    await fetch(`/cards/${cardID}`,{
+        method: 'PUT',
+        body: JSON.stringify(card),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    const start_button = document.getElementById(`start-task-${cardID}`)
+    start_button.parentNode.removeChild(start_button)
+}
+
+
 
 
 
@@ -73,7 +119,7 @@ const getTasks = async () => {
     //Create HTML template to print list of taks
     const template = card => `
     <div class="card ${getCardSize(card.text.length)}  draggable-container  card-${card._id}" id="${card._id}">
-        <div class="card-header ">
+        <div class="card-header" id="card-header-${card._id}">
             <div id="date">${card.date}</div>
             <label class="menu-container" >
             <input type="checkbox" id="show-menu-${card._id}" onclick=openMenu('${card._id}') class="menu-open-checkbox" ><img src="menu-puntos.png" style="width:20px"></img></button></input>
@@ -84,10 +130,9 @@ const getTasks = async () => {
         <div id="tags-card-list-${card._id}" class="tags-card-list"></div>
         <div id="menu-open-${card._id}" class="menu-open" style="display:none">
               <menu class="menu-options" id="menu-options">
-                    <li><img src="play (4).png" >Start</li>
-                    <li><img src="cross (1).png"></img>Close Task</li>
-                    <li><img src="file-edit (3).png"></img>Edit</li>
-                    <li><img src="trash (3).png"></img>Delete</li>
+                    <li id="start-task-${card._id}" onclick=startTask('${card._id}') ><img src="play (5).png" >Start</li>
+                    <li id="close-task-${card._id}"><img src="cross (1).png"></img>Close Task</li>
+                    <li id="edit-task-${card._id}"><img src="file-edit (3).png"></img>Edit</li>
                 </menu>
         </div>
     </div>
@@ -104,14 +149,28 @@ const getTasks = async () => {
         message.innerHTML = `<p>Hey there! It's a great time to kickstart your day by creating a new task. 🚀 What's on your to-do list?</p>`
     }else{
         const message = document.getElementById('empty-message');
-        message.innerHTML = ` `
-    }
 
+    }
     //callback getCardTags() to display tags linked to the card
     getCardTags(cards)
 
     //callback to allow draggable actions on the cards.
     draggableCardActive()
+
+    cards.forEach(async card => {
+        if (card.active == true){
+            const started_task = document.getElementById(`card-header-${card._id}`);
+            const start_button = document.getElementById(`start-task-${card._id}`)
+            const card_menu_format = `menu-open-${card._id}`
+            const menuOptions = document.getElementById(card_menu_format);
+            started_task.innerHTML += `<div id="${card._id}"  class="started-task">
+                                    <p>IN PROGRESS</p>
+                                </div>`
+            start_button.parentNode.removeChild(start_button)
+            
+        }
+    })
+
     
 }
 
@@ -123,12 +182,10 @@ const getTags = async () => {
     //Conditional to display a message when there are no tags
     if(tags.length == 0){
         const message = document.getElementById('tag-message');
-        message.innerHTML = `<p>Add custom tags</p>`
-        const text = document.getElementById('text-drag')
-        text.classList.remove('show-message')
+        message.innerHTML = `<p id="message">Add custom tags</p>`
     }else{
-        const text = document.getElementById('text-drag')
-        text.classList.add('show-message')
+        const message = document.getElementById('tag-message');
+        message.innerHTML = `<p id="text-drag" class="text-drag show-message" ><span><img src="curved-arrow (1).png" alt="curve-arrow" width="30px"></span>Assign tags to cards by dragging and dropping them onto the cards.(max. 5 tags per card)</p>`
     }
     
     
@@ -143,6 +200,7 @@ const getTags = async () => {
     })
     //console.log(tags_array)
 
+    
     //Callback to add draggable effect to tags
     draggActive()
     
@@ -159,7 +217,6 @@ const getCardTags = async  (cards) => {
         //fetch to get card by its id 
         const cards = await res.json()
         const tag_array = cards.tags //Get tags array from card json
-        console.log(`This is the tag array: ${tag_array}`)
         if(tag_array.length > 0){
             // foreach to go through tags and return them into the html card.    
             tag_array.forEach(async tag => {
@@ -167,8 +224,6 @@ const getCardTags = async  (cards) => {
                 const response = await fetch(`/tags/${tag}`)
                 const tags = await response.json()
                 if(tags != null){
-
-                    console.log(`tag:${tags.tag}`)
                     const tagList = document.getElementById(`tags-card-list-${card._id}`)
                     tagList.innerHTML += `
                         <li class="tags-card-cont card-id-${card._id}" style="background-color:${tags.background_color};border-color:${tags.border_color};color:${tags.text_color};"  id="${tags._id}" >
@@ -215,7 +270,7 @@ async function addTagCard(cardId){
         }
     })
 
-    renderTagsCard(cardId)
+    //renderTagsCard(cardId)
     
 
 }
@@ -277,13 +332,14 @@ const taskFormListener = ()=>{
         const formData = new FormData(cardForm)
         const card_data = Object.fromEntries(formData.entries())
         const getTask =  card_data.task
-
         const date = new Date(Date.now());//get instance of Date
         const date_format = date.toLocaleDateString(); // format date response
 
         const taskForm = {
             "date": date_format,
-            "text": getTask
+            "text": getTask,
+            "tags": [],
+            "active": false
         }
 
         await fetch('/cards',{
@@ -366,7 +422,6 @@ async function draggableCardActive(){
             e.preventDefault();
             container.addEventListener('drop', (e) =>{ 
                 e.preventDefault();
-    
                 //Create an array of existing tags
                 const existingTagsList = [...existingTags].map(tag => tag.id)
 
@@ -386,6 +441,9 @@ async function draggableCardActive(){
         container.addEventListener('dragend', (e) =>{
             e.preventDefault();
             addTagCard(container.id)
+
+            const text = document.getElementById('text-drag')
+            text.parentNode.removeChild(text)
             
         });
     })
@@ -455,5 +513,6 @@ window.onload = ()=>{
     addTagsFormListener();
     getTasks();
     getTags();
+    renderInitialMessage();
   
 }

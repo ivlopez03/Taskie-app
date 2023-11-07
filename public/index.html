@@ -13,7 +13,7 @@
     </div>
     <header>
         <div>
-            <img src="logo (8).png" alt="" style="width: 60px;margin-right: 7px;border-radius: 6px;">
+            <img src="logo (8).png" alt="logo" style="width: 60px;margin-right: 7px;border-radius: 6px;">
         </div>
         <h1 id="title">Taskie  <span style="font-weight: 400;">フォーカス</span></h1>
     </header>
@@ -24,40 +24,34 @@
     <form id="card-form" class="task-form">
         
         <input type="text" name="task" id="task-input" placeholder="Daily task " required minlength="1" maxlength="230">
-        <button type="submit" id="createTask-btn"><img id="submit-icon" src="angle-right (2).png" alt="" style="width: 15px;"></button>
+        <button type="submit" id="createTask-btn"><img id="submit-icon" src="angle-right (2).png" alt="create task" style="width: 15px;"></button>
     </form>
 
     <div class="delete-message" id="delete-message"></div>
+   
 
     <!-- Tags Navigation container -->
     <div class="tags-nav">
         <button id="addTags-btn">Add Tags <img src="plus (4).png" alt="" style="width: 17px;"></button>
         <div class="delete-tag-container" id="delete-tag-container"><img src="trash (4).png" alt=""></div>
+        <div class="delete-drop-message" id="delete-drop-message">
+            <p>Drag n drop tags here to remove them</p>
+            <img src="curved-arrow.png" alt="">
+        </div>
         <div class="tags-container">
             <div>
                 <ul id="tags-list"></ul>
             </div>
         </div>
-        <div class="tag-message" id= "tag-message"></div>
-        <p style="font-weight: 300;font-size: 15px;text-align: center;font-style: italic;color: #7c7c7c;" id="text-drag" class="text-drag" >Assign tags to cards by dragging and dropping them onto the cards.(max. 5 tags per card)</p>
+    </div>
+    <div class="tag-message" id= "tag-message">
+    
     </div>
 
-    <!--
-    <div class="started-task-box" id="started-task">
-        <span >In progress</span>
-        <img src="dogrun.gif" alt="" width="25px"> 
-    </div>
-    -->
-
+    
     <!--Filter-->
-    <div class="filter-form">
-        <form action="Filter">
-            <label for="">Filter:</label>
-            <input type="checkbox" name="alltasks" id="" checked>All
-            <input type="checkbox" name="Inprogress" id="">In progress
-            <input type="checkbox" name="closed" id="">Closed
-        </form>
-    </div>
+    
+   
     <div class="empty-message" id="empty-message"></div>
     <!--Task cards container flexbox -->
     <div class="card-container" id="card-container">
@@ -93,7 +87,7 @@
         </div>
     </div>
 
-    
+
     
 </body>
 <script>
@@ -138,13 +132,18 @@
         e.preventDefault();
         container_draggable.style.transform = 'scale(1)'
         container_draggable.style.removeProperty('background-color')
-        container_draggable.style.borderRadius = '4px'
         const tag = document.querySelector('.dragging')
         console.log(tag)
         deleteTagsCard(tag.id)
         getTasks()
+
         
     })
+
+    container_draggable_delete.addEventListener('dragleave', (e) =>{
+        container_draggable.style.transform = 'scale(1)'
+        container_draggable.style.removeProperty('background-color')
+    });	
 
 
 

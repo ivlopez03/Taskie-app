@@ -10,7 +10,8 @@ export const Card = mongoose.model('Card',{
     date: {type: String,required: true},    
     text: {type: String,required: true},
     tags: {type: Array,required: true},
-})
+    active: {type: Boolean},
+});
 
 //Tags model 
 export const Tag = mongoose.model('Tag',{

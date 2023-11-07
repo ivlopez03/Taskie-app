@@ -1,7 +1,20 @@
+:root {
+    --card_width: 280px;
+    --card_border_radius:16px;
+    --row_increment:11.5px;
+    --card_small:17;
+    --card_medium:21;
+    --card_large:28;
+    --gradient:  linear-gradient(45deg, #e80033, #f9a852, #f69653, #f38654, #f07654, #ed6856, #ef5956, #ee4c58, #56c1ab);
+    --gradientdos: linear-gradient(30deg, #eeaeca,#e9afcc,#e2b0ce,#d7b2d2,#cbb4d6,#bfb5da,#b6b6dd,#aeb7e0,#a5b8e3,#9eb9e6);
+    --gradienttres: linear-gradient(30deg,rgba(238,174,202,1) 0%, rgba(158,185,230,1) 50%,rgba(238,174,202,1) 100%)
+}
+
 body{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     overflow-x:hidden;
 }
+
 
 header {
     position: relative;
@@ -64,7 +77,8 @@ header #title{
     width: 40%;
     margin: 0 auto;
     margin-top: 70px;
-    margin-bottom: 40px;
+    margin-bottom: 0px;
+    height: 125px;
 }
 .tags-nav button{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -92,6 +106,7 @@ header #title{
 .tags-container{
     margin-top: 15px;
     display: flex;
+    width: 100%;
     
 }
 
@@ -149,17 +164,64 @@ header #title{
     position: absolute;
     width: 100%;
     margin-top: 30px;
+
 }
 .delete-message p{
     position: relative;
     margin: 0 auto;
     width: fit-content;
     padding: 2px 5px;
+    font-weight: 300;
+    font-size: 15px;
+
+
+}
+
+.tag-message{
+    padding: 3px 5px;
+    width: fit-content;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 0;
+}
+.tag-message p{
+    font-size: 15px;
+    color: black;
+    margin: 0;
+    text-align: center;
     font-weight: 500;
-    font-size: 14px;
-    border-radius: 4px;
-    color: rgba(175, 175, 175, 0.695);
-    font-style: italic;
+}
+#message{
+    position: relative;
+    top: -90px;
+    color: #aeaeae;
+    font-weight: 300;
+}
+
+.delete-drop-message{
+    position: relative;
+    width: fit-content;
+    float: right;
+    left: 300px;
+    top: -60px;
+    
+   
+    
+}
+.delete-drop-message p{
+    font-weight: 500;
+    font-size: 15px;
+    word-break: break-all;
+}
+.delete-drop-message img{
+    width: 30px;
+    transform: scaleX(-1);
+    margin-left: 20px;
+}
+.text-drag img{
+    position: relative;
+    top: 40px;
+    right: 20px;
 }
 
 /* ____________________________________________ menu tags creation __*/
@@ -196,14 +258,6 @@ header #title{
 }
 
 /* ____________________________________________ Task cards container flebox __*/
-:root {
-    --card_width: 280px;
-    --card_border_radius:16px;
-    --row_increment:11.5px;
-    --card_small:17;
-    --card_medium:21;
-    --card_large:28;
-}
 
 .card-container{
     margin-top: 5px;
@@ -409,6 +463,33 @@ header #title{
     margin-right: 4px;
 }
 
+.started-task{
+    position: fixed;
+    width: fit-content;
+    background-color: #000000;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    margin: 0 ;
+    padding: 2px 6px;
+    background-image: var(--gradienttres);
+    animation: fondo-anim 10s infinite alternate;
+    background-size: 400%;
+
+}
+@keyframes fondo-anim{
+    0%{background-position: left;} /*por defecto*/
+    100%{background-position: right;}
+}
+
+.started-task p{
+    font-weight: 600;
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+
+}
+
 /* ____________________________________________ tags card __*/
 .tags-card-cont {
     display: flexbox;
@@ -419,7 +500,7 @@ header #title{
     flex-wrap: wrap;
     margin-right: 4px;
     font-size: 13px;
-    margin-bottom: 0px;
+    margin-bottom: 2px;
     border: 1px solid ;
     padding: 2px;
    
@@ -451,13 +532,6 @@ header #title{
     color: #aeaeae;
     margin-bottom: 50px;
 }
-.tag-message{
-    text-align: center;
-    margin-top: 30px;
-    font-weight: 300;
-    color: #aeaeae;
-    
-}
 
 .text-drag{
     opacity: 0;
@@ -487,3 +561,57 @@ header #title{
     top: -10px;
 }
 
+
+@media only screen and (max-width: 1040px) and (min-width: 551px) {
+    .delete-drop-message{
+        position: relative;
+        width: 155px;
+        float: right;
+        left: 190px;
+        top: -70px;
+        
+    }
+    .text-drag img{
+        position: relative;
+        top: 80px;
+        right: 20px;
+    }
+
+}
+
+
+@media only screen and (max-width: 550px){
+
+    .delete-drop-message{
+        position: absolute;
+        width: 155px;
+        right: 0;
+        top: 400px;
+    }
+    .delete-drop-message p{
+        font-size: 12px;
+        text-align: center;
+    }
+    .delete-drop-message img{
+        margin-left: 90px;
+        width: 20px;
+        transform: none;
+       
+    }
+    .tag-message p{
+        font-size: 12px;
+    }
+    .text-drag img{
+        position: relative;
+        top: 80px;
+        left: 230px;
+        transform:scaleX(-1);
+    }
+    .tags-nav{
+        width: 80%;
+    }
+    .tag-message{
+        width: 100%;
+    }
+
+}
