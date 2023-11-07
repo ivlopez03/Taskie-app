@@ -58,9 +58,12 @@ const editCard = async (req,res) =>{
 //editCard({text:'Hello Karla'},{tags:['UI/UX']});
 
 const deleteCard = async (req,res,filter)=>{
-    //const card = await Card.findOneAndDelete(filter);
-    //console.log('The card has been deleted : ' + card)
-    res.send('Deleting card')
+    const{id} = req.params
+    const card = await Card.findOne({_id:id})
+    if(card){
+        card.remove()
+    }
+    res.sendStatus(204)
 }
 
 //deleteCard({text:'Hello Karla'});

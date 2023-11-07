@@ -8,6 +8,7 @@
     <title>Zero Focus</title>
 </head>
 <body>
+    <div class="card-deleted-message show" id="card-deleted-message"></div>
     <div>
         <p style="text-align: end;padding: 0px 60px;"><img src="user (2).png" alt="user" style="width: 13px;"><span style="margin-left: 8px;">Ivan Lopez</span></p>
     </div>
@@ -32,8 +33,8 @@
 
     <!-- Tags Navigation container -->
     <div class="tags-nav">
-        <button id="addTags-btn">Add Tags <img src="plus (4).png" alt="" style="width: 17px;"></button>
-        <div class="delete-tag-container" id="delete-tag-container"><img src="trash (4).png" alt=""></div>
+        <button id="addTags-btn">Add Tags <img src="plus-small.png" alt="" style="width: 17px;"></button>
+        <div class="delete-tag-container" id="delete-tag-container"><img src="trash (5).png" alt=""></div>
         <div class="delete-drop-message" id="delete-drop-message">
             <p>Drag n drop tags here to remove them</p>
             <img src="curved-arrow.png" alt="">
@@ -57,6 +58,19 @@
     <div class="card-container" id="card-container">
     </div>
 
+    <div class="confirm-container" id="confirm-container">
+        <div class="confirm">
+            <form id="delete-card-form" class="confirm-form">
+                <p style="font-weight: 700;font-size: 14px;margin: 0;">Confirm Deletion</p>
+                <hr>
+                <p>Are you sure you want to delete this item? This action cannot be undone."</p>
+                <div class="btn-container">
+                    <button id="cancel-deletion-btn" class="confirm-form-btn delete-btn">Cancel</button>
+                    <button id="confirm-deletion-btn" class="confirm-form-btn confirm-btn">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <!-- Add tags preview container -->
     <div class="modal-container" id="modal_container">
         <div class="modal">
@@ -95,6 +109,7 @@
     const modal_container = document.getElementById('modal_container');
     const close = document.getElementById('close-btn');
     const tag_demo = document.getElementById('pre-tag');
+
     
     open.addEventListener('click', () => {
       modal_container.classList.add('show');

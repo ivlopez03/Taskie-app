@@ -102,6 +102,41 @@ async function startTask(cardID){
     start_button.parentNode.removeChild(start_button)
 }
 
+async function deleteCard(cardID) {
+    const card_menu_format = `menu-open-${cardID}`
+    const menuOptions = document.getElementById(card_menu_format);
+    menuOptions.style.display = "none";
+    const confirm_button = document.getElementById('confirm-deletion-btn')
+    const cancel_button = document.getElementById('cancel-deletion-btn')
+    const delete_box = document.getElementById('confirm-container')
+    const deleted_message = document.getElementById('card-deleted-message')
+    delete_box.classList.add('show');
+
+    confirm_button.addEventListener('click',async function(e){
+        e.preventDefault();
+        const card = document.getElementById(`${cardID}`)
+        await fetch(`/cards/${cardID}`,{
+            method: 'DELETE',
+        })
+        card.parentNode.removeChild(card)
+        delete_box.classList.remove('show');
+
+        deleted_message.innerHTML += `<p> The Task has been deleted successfully ! </p>`;
+        setTimeout(function(){
+            deleted_message.innerHTML = ' ';
+        }, 3000);
+        
+    })
+
+    cancel_button.addEventListener('click', function(e) {
+        e.preventDefault();
+        delete_box.classList.remove('show');
+    })
+
+}
+
+
+
 
 
 
@@ -131,7 +166,7 @@ const getTasks = async () => {
         <div id="menu-open-${card._id}" class="menu-open" style="display:none">
               <menu class="menu-options" id="menu-options">
                     <li id="start-task-${card._id}" onclick=startTask('${card._id}') ><img src="play (5).png" >Start</li>
-                    <li id="close-task-${card._id}"><img src="cross (1).png"></img>Close Task</li>
+                    <li id="close-task-${card._id}" onclick=deleteCard('${card._id}') ><img src="cross (1).png"></img>Close Task</li>
                     <li id="edit-task-${card._id}"><img src="file-edit (3).png"></img>Edit</li>
                 </menu>
         </div>
@@ -146,9 +181,10 @@ const getTasks = async () => {
     //Conditional to display message when there are no cards in database.
     if(cards.length == 0){
         const message = document.getElementById('empty-message');
-        message.innerHTML = `<p>Hey there! It's a great time to kickstart your day by creating a new task. 🚀 What's on your to-do list?</p>`
+        message.innerHTML = `<p>Hey there! It's a great time to kickstart your day by creating a new task. ☄️ What's on your to-do list?</p>`
     }else{
         const message = document.getElementById('empty-message');
+        message.parentNode.removeChild(message);
 
     }
     //callback getCardTags() to display tags linked to the card
@@ -282,7 +318,7 @@ const deleteTagsCard = async (tagID)=>{
     await fetch(`/tags/${tagID}`,{
         method: 'DELETE'
     }).then(() => {
-        message_container.innerHTML = `<p>The tag has been deleted successfully.</p>`
+        message_container.innerHTML = `<p>The tag has been deleted successfully !</p>`
         setTimeout(function(){
             message_container.innerHTML = '';
         }, 3000);
