@@ -2,18 +2,15 @@
 
 let tags_array = [] ;
 
-console.log(tags_array)
+console.log('Hello World')
 
 async function renderTags(tags_array){
-    console.log('renderizar tags')
     const tagList = document.getElementById('tags-list')
     tagList.innerHTML = ` `
-    
     tags_array.forEach(tag =>{
-        //console.log(tag)
         tagList.innerHTML += tag
     })   
-    console.log(tags_array)
+    console.log('Hello Ivan')
     if(tags_array.length == 0){
         const message = document.getElementById('tag-message');
         message.innerHTML = `<p id="message">Add custom tags</p>`
@@ -496,7 +493,7 @@ async function draggActive(){
             draggable.classList.add('tags-card-cont')
             const tag = document.getElementById('tag-label')
             tag.style.cursor = 'grabbing'
-            console.log('drag start')
+            //console.log('drag start')
         })
 
         draggable.addEventListener('dragend', (e) => {
