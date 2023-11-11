@@ -2,33 +2,22 @@
 
 let tags_array = [] ;
 
-console.log('Hello World')
-
 async function renderTags(tags_array){
     const tagList = document.getElementById('tags-list')
     tagList.innerHTML = ` `
     tags_array.forEach(tag =>{
         tagList.innerHTML += tag
     })   
-    console.log('Hello Ivan')
     if(tags_array.length == 0){
         const message = document.getElementById('tag-message');
         message.innerHTML = `<p id="message">Add custom tags</p>`
         const text = document.getElementById('text-drag')
         text.classList.remove('show-message')
     }
-    
-    
-    
     draggActive()
 }
 
-const renderInitialMessage = async () =>{
-    let message = document.getElementById('delete-drop-message')
-    setTimeout(function(){
-        message.innerHTML = ``
-    }, 10000);
-}
+
 
 
 
@@ -48,7 +37,7 @@ async function renderTagsCard(card){
         const tags = await response.json()
         tagList.innerHTML += `
             <li class="tags-card-cont card-id-${card}" style="background-color:${tags.background_color};border-color:${tags.border_color};color:${tags.text_color};cursor:none;"  id="${tags._id}" >
-                <label class="tag-container" >${tags.tag}</label>
+                <label class="tag-container  tag " >${tags.tag}</label>
             </li>
         `
     })
@@ -132,14 +121,6 @@ async function deleteCard(cardID) {
 
 }
 
-
-
-
-
-
-
-
-
 //_______________________________________________________________________________________GET CARDS FROM DATABASE____.
 // getTasks() async Function to get task from database and return html elements in order to display them.
 const getTasks = async () => {
@@ -181,7 +162,7 @@ const getTasks = async () => {
         message.innerHTML = `<p>Hey there! It's a great time to kickstart your day by creating a new task. ☄️ What's on your to-do list?</p>`
     }else{
         const message = document.getElementById('empty-message');
-        message.parentNode.removeChild(message);
+        message.innerHTML = ``;
 
     }
     //callback getCardTags() to display tags linked to the card
@@ -223,7 +204,7 @@ const getTags = async () => {
     
     
     //Create template to print list of tags
-    const template = tag => `<li draggable="true"  style="background-color:${tag.background_color};border-color:${tag.border_color};color:${tag.text_color}" class="draggable" id="${tag._id}" ><label class="tag-container" id="tag-label" >${tag.tag}</label></li>`
+    const template = tag => `<li draggable="true"  style="background-color:${tag.background_color};border-color:${tag.border_color};color:${tag.text_color}" class="draggable" id="${tag._id}" ><label class="tag-container  tag" id="tag-label" >${tag.tag}</label></li>`
     const tagList = document.getElementById('tags-list')
     tagList.innerHTML = tags.map(tag => template(tag)).join('')
 
@@ -260,7 +241,7 @@ const getCardTags = async  (cards) => {
                     const tagList = document.getElementById(`tags-card-list-${card._id}`)
                     tagList.innerHTML += `
                         <li class="tags-card-cont card-id-${card._id}" style="background-color:${tags.background_color};border-color:${tags.border_color};color:${tags.text_color};"  id="${tags._id}" >
-                            <label class="tag-container" style="cursor:auto;" >${tags.tag}</label>
+                            <label class="tag-container tag " style="cursor:auto;" >${tags.tag}</label>
                         </li>
                     `   
                 }
@@ -303,7 +284,7 @@ async function addTagCard(cardId){
         }
     })
 
-    //renderTagsCard(cardId)
+    renderTagsCard(cardId)
     
 
 }
@@ -457,7 +438,6 @@ async function draggableCardActive(){
                 e.preventDefault();
                 //Create an array of existing tags
                 const existingTagsList = [...existingTags].map(tag => tag.id)
-
                 // add aditional class to cards that contains the .dragging class in order to assign unique tag id
                 const draggable = document.querySelector('.dragging')
                 draggable.classList.add(`tag-${container.id}`)
@@ -466,6 +446,7 @@ async function draggableCardActive(){
                 //Conditional to verify the tags dropped are not repeated and there are less than 5 tags.
                 if(existingTagsList.includes(draggable.id) == false && existingTagsList.length  < 5){
                     container.appendChild(draggable)
+
                     
                 }
             })  
@@ -475,8 +456,8 @@ async function draggableCardActive(){
             e.preventDefault();
             addTagCard(container.id)
 
-            const text = document.getElementById('text-drag')
-            text.parentNode.removeChild(text)
+            const text = document.getElementById('tag-message')
+            text.innerHTML = ``
             
         });
     })
@@ -546,6 +527,6 @@ window.onload = ()=>{
     addTagsFormListener();
     getTasks();
     getTags();
-    renderInitialMessage();
+
   
 }
