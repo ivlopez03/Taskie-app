@@ -85,7 +85,23 @@ async function startTask(cardID){
     })
 
     const start_button = document.getElementById(`start-task-${cardID}`)
-    start_button.parentNode.removeChild(start_button)
+    const btn_parent = start_button.parentNode;
+        
+    const done_button = document.createElement('li')
+    done_button.setAttribute('id',`done-task-${cardID}`)
+
+    const img = document.createElement('img')
+    img.src='check.png'
+    const span = document.createElement('span')
+    span.textContent = 'Done'
+            
+    btn_parent.replaceChild(done_button,start_button)
+    const doneParent = document.getElementById(`done-task-${cardID}`)
+    doneParent.appendChild(img)
+    doneParent.appendChild(span)
+    
+    
+
 }
 
 async function deleteCard(cardID) {
@@ -121,6 +137,26 @@ async function deleteCard(cardID) {
 
 }
 
+async function editCard(cardID){
+    const card = document.getElementById(`${cardID}`)
+    card.classList.add('card_edit_mode')
+    card.style.transform = 'none'
+
+    //Ocultar menu button
+
+    //Agregar 2 botones
+    //boton 1: Cancel button
+    //boton 2: Submit button
+
+    
+
+
+}
+
+
+
+
+
 //_______________________________________________________________________________________GET CARDS FROM DATABASE____.
 // getTasks() async Function to get task from database and return html elements in order to display them.
 const getTasks = async () => {
@@ -144,8 +180,8 @@ const getTasks = async () => {
         <div id="menu-open-${card._id}" class="menu-open" style="display:none">
               <menu class="menu-options" id="menu-options">
                     <li id="start-task-${card._id}" onclick=startTask('${card._id}') ><img src="play (5).png" >Start</li>
-                    <li id="close-task-${card._id}" onclick=deleteCard('${card._id}') ><img src="cross (1).png"></img>Close Task</li>
-                    <li id="edit-task-${card._id}"><img src="file-edit (3).png"></img>Edit</li>
+                    <li id="close-task-${card._id}" onclick=deleteCard('${card._id}') ><img src="trash (7).png"></img>Delete</li>
+                    <li id="edit-task-${card._id}" onclick=editCard('${card._id}') ><img src="file-edit (3).png" ></img>Edit</li>
                 </menu>
         </div>
     </div>
@@ -175,12 +211,25 @@ const getTasks = async () => {
         if (card.active == true){
             const started_task = document.getElementById(`card-header-${card._id}`);
             const start_button = document.getElementById(`start-task-${card._id}`)
-            const card_menu_format = `menu-open-${card._id}`
-            const menuOptions = document.getElementById(card_menu_format);
             started_task.innerHTML += `<div id="${card._id}"  class="started-task">
                                     <p>IN PROGRESS</p>
                                 </div>`
-            start_button.parentNode.removeChild(start_button)
+            //start_button.parentNode.removeChild(start_button)
+
+            const btn_parent = start_button.parentNode;
+        
+            const done_button = document.createElement('li')
+            done_button.setAttribute('id',`done-task-${card._id}`)
+
+            const img = document.createElement('img')
+            img.src='check.png'
+            const span = document.createElement('span')
+            span.textContent = 'Done'
+            
+            btn_parent.replaceChild(done_button,start_button)
+            const doneParent = document.getElementById(`done-task-${card._id}`)
+            doneParent.appendChild(img)
+            doneParent.appendChild(span)
             
         }
     })
