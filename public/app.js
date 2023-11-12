@@ -137,18 +137,54 @@ async function deleteCard(cardID) {
 
 }
 
-async function editCard(cardID){
+async function editCard(cardID,textCard){
     const card = document.getElementById(`${cardID}`)
     card.classList.add('card_edit_mode')
     card.style.transform = 'none'
 
-    //Ocultar menu button
+    //Hide open menu button
+    const menu_btn = document.getElementById(`submenu-${cardID}`)
+    menu_btn.style.display='none'
 
-    //Agregar 2 botones
-    //boton 1: Cancel button
-    //boton 2: Submit button
+    //Hide menu options box
+    const menuOptions = document.getElementById(`menu-open-${cardID}`);
+    menuOptions.style.display = "none";
 
-    
+    //Add 2 buttons
+    //button 1: Cancel button
+    card.innerHTML += `<button class="edit-cancel-btn" id="edit-cancel-btn">Cancel</button>`
+    //button 2: Submit button
+    card.innerHTML += `<button class="edit-submit-btn" id="edit-submit-btn">Submit</button>`    
+
+    //Add edit form 
+    //Add  contentEditable="true"
+    const text = document.getElementById(`task-text-${cardID}`)
+    text.setAttribute('contentEditable','true')
+    text.setAttribute('minlength','1')
+    text.setAttribute('maxlength','230')
+
+    const textParent = text.parentNode;
+        
+    const textarea = document.createElement('textarea')
+    textarea.setAttribute('id',`task-text-${cardID}`)
+    textarea.setAttribute('minlength','1')
+    textarea.setAttribute('maxlength','230')
+    textarea.textContent = textCard
+
+    textParent.replaceChild(textarea,text)
+        
+
+    //crear una lista con las tags de la card
+    let tagsList = document.getElementsByClassName(`card-id-${cardID}`)
+    let tags = [... tagsList]
+    console.log(tagsList)
+    tags.forEach(tag => {
+        console.log(tag.id)
+    })
+    //agregar un boton para remover las tags del html y actualizar la lista de tags
+
+    //agregar funcion para cancel button
+    //agregar funcion para submit button, crear un fetch para actualizar el texto y las tags(usar array creado )
 
 
 }
@@ -170,18 +206,18 @@ const getTasks = async () => {
     <div class="card ${getCardSize(card.text.length)}  draggable-container  card-${card._id}" id="${card._id}">
         <div class="card-header" id="card-header-${card._id}">
             <div id="date">${card.date}</div>
-            <label class="menu-container" >
+            <label class="menu-container" id="submenu-${card._id}" >
             <input type="checkbox" id="show-menu-${card._id}" onclick=openMenu('${card._id}') class="menu-open-checkbox" ><img src="menu-puntos.png" style="width:20px"></img></button></input>
             </label>
             
         </div>
-        <p>${card.text}</p>
+        <p id="task-text-${card._id}">${card.text}</p>
         <div id="tags-card-list-${card._id}" class="tags-card-list"></div>
         <div id="menu-open-${card._id}" class="menu-open" style="display:none">
               <menu class="menu-options" id="menu-options">
                     <li id="start-task-${card._id}" onclick=startTask('${card._id}') ><img src="play (5).png" >Start</li>
                     <li id="close-task-${card._id}" onclick=deleteCard('${card._id}') ><img src="trash (7).png"></img>Delete</li>
-                    <li id="edit-task-${card._id}" onclick=editCard('${card._id}') ><img src="file-edit (3).png" ></img>Edit</li>
+                    <li id="edit-task-${card._id}" onclick=editCard('${card._id}','${card.text}') ><img src="file-edit (3).png" ></img>Edit</li>
                 </menu>
         </div>
     </div>
