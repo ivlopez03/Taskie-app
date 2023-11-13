@@ -80,7 +80,8 @@ header #title{
     margin: 0 auto;
     margin-top: 70px;
     margin-bottom: 0px;
-    height: 125px;
+    height: fit-content;
+    
 }
 .tags-nav button{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -106,11 +107,9 @@ header #title{
 
 
 .tags-container{
-    position: absolute;
     margin-top: 15px;
     display: flex;
-    
-    
+    width: 100%;
 }
 
 .tags-container ul{
@@ -121,12 +120,12 @@ header #title{
     flex-wrap: wrap;
 }
 .tags-container li{
+    margin-top: 3px;
     font-size: 12px;
     margin-right: 8px;
-    border-radius: 3px;
+    border-radius: 10px;
     border: 1px solid transparent;
-    padding: 3px;
-    margin-top: 4px;
+    padding: 5px;
 }
 
 
@@ -141,8 +140,10 @@ header #title{
     cursor: -webkit-grab; /* Chrome 1-21, Safari 4+ */
     cursor:    -moz-grab; /* Firefox 1.5-26 */
     cursor:         grab;
-    padding: 5px;
     user-select:none;
+}
+.tag{
+    padding: 4px;
 }
 .checkmark{
     position: absolute;
@@ -186,7 +187,8 @@ header #title{
     width: fit-content;
     text-align: center;
     margin: 0 auto;
-    margin-top: 0;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 .tag-message p{
     font-size: 15px;
@@ -197,7 +199,6 @@ header #title{
 }
 #message{
     position: relative;
-    top: -90px;
     color: #aeaeae;
     font-weight: 300;
 }
@@ -224,7 +225,7 @@ header #title{
 }
 .text-drag img{
     position: relative;
-    top: 40px;
+    top: 30px;
     right: 20px;
 }
 
@@ -264,7 +265,7 @@ header #title{
 /* ____________________________________________ Task cards container flebox __*/
 
 .card-container{
-    margin-top: 5px;
+    margin-top: 15px;
     width: 80vw;
     position: absolute;
     left: 50%;
@@ -273,6 +274,7 @@ header #title{
     display: grid;
     grid-template-columns: repeat(auto-fill,var(--card_width));
     grid-auto-rows: var(--row_increment);
+    grid-auto-flow: dense;
     justify-content: center;
 }
 
@@ -301,6 +303,12 @@ header #title{
 }
 .card_large{
     grid-row-end: span var(--card_large);
+}
+
+.card_edit_mode{
+    transition: all .2 ease-in-out;
+    grid-column-end:span 2;
+    grid-row-end: span 23;
 }
 
 .card #date{
@@ -442,7 +450,7 @@ header #title{
 
 
 }
-.menu-options li:hover{
+.options-hover:hover{
     background-color: #d8d8d86b;
     cursor: pointer;
 }
@@ -460,6 +468,7 @@ header #title{
     background-color: transparent;
     border: none;
     visibility: hidden;
+    display: none;
     
 }
 
@@ -495,13 +504,51 @@ header #title{
 
 }
 
+
+.edit-button-container{
+    width: fit-content;
+    position: absolute;
+    top: 50px;
+    right: 30px;
+    display: grid;
+    row-gap: 15px;
+}
+.edit-button-container button {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: ease-in-out 0.2s;
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.3);
+}
+.edit-button-container button:hover{
+    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0,0.3);
+}
+.cancel-btn{
+    background-color: tomato;
+    color: white;
+}
+.cancel-btn:hover{
+    background-color: rgb(235, 85, 59);
+}
+
+.submit-btn{
+    background-color: rgb(231, 231, 231);
+
+}
+.submit-btn:hover{
+    background-color:rgb(31, 162, 255);
+    color: white;
+}
+
+
 /* ____________________________________________ tags card __*/
 .tags-card-cont {
     display: flexbox;
     float: left;
     list-style: none;
     width: fit-content;
-    border-radius: 3px;
+    border-radius: 10px;
     flex-wrap: wrap;
     margin-right: 4px;
     font-size: 13px;
@@ -532,14 +579,17 @@ header #title{
 
 .empty-message{
     text-align: center;
-    margin-top: 70px;
+    margin-top: 30px;
     font-weight: 300;
     color: #aeaeae;
-    margin-bottom: 50px;
+}
+.empty-message p{
+    margin: 0;
 }
 
 .text-drag{
     opacity: 0;
+
 }
 .show-message{
     opacity: 1;
@@ -641,6 +691,26 @@ header #title{
     font-weight: 500;
     width: fit-content;
     font-weight: 500;
+}
+
+.card textarea{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    margin-top: 15px;
+    border: 1px solid transparent;
+    width: 75%;
+    height: 105px;
+    outline: none;
+}
+
+.remove-tagcard-btn{
+    background-color: tomato;
+    border: none;
+    cursor: pointer;
+    border-radius: 100%;
+    float: left;
+    margin-right: 5px;
 }
 
 
