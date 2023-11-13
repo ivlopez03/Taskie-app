@@ -5,16 +5,16 @@
     --card_small:17;
     --card_medium:21;
     --card_large:28;
-    --gradient:  linear-gradient(45deg, #e80033, #f9a852, #f69653, #f38654, #f07654, #ed6856, #ef5956, #ee4c58, #56c1ab);
-    --gradientdos: linear-gradient(30deg, #eeaeca,#e9afcc,#e2b0ce,#d7b2d2,#cbb4d6,#bfb5da,#b6b6dd,#aeb7e0,#a5b8e3,#9eb9e6);
-    --gradienttres: linear-gradient(30deg,rgba(238,174,202,1) 0%, rgba(158,185,230,1) 50%,rgba(238,174,202,1) 100%)
+    --gradient: linear-gradient(30deg,rgba(238,174,202,1) 0%, rgba(158,185,230,1) 50%,rgba(238,174,202,1) 100%);
+    --font_family: karla;
+    
 }
 
 body{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    
+    font-family: var(--font_family);
     margin: 0;
 }
+
 
 
 
@@ -50,7 +50,6 @@ header #title{
     outline: none;
     width: 40%;
     border-color: #a7a7a7;
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
 #createTask-btn{
@@ -74,6 +73,11 @@ header #title{
     top: 1px;
 }
 
+input::placeholder{
+    font-family: var(--font_family);
+    color: #d3d3d3;
+}
+
 /* _____________________________________________ Tags Navigation __*/
 .tags-nav{
     width: 40%;
@@ -84,7 +88,7 @@ header #title{
     
 }
 .tags-nav button{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family:var(--font_family) ;
     border: none;
     background-color: transparent;
     cursor: pointer;
@@ -287,7 +291,6 @@ header #title{
     overflow: hidden;
     font-weight: 300;
     background-color: rgba(255, 255, 255, 0.842);
-    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.4);
     transition: all .2s ease-in-out;
     row-gap: 1em;
 }
@@ -410,7 +413,7 @@ header #title{
 
 #createTag-btn{
     color: white;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: var(--font_family);
     position: relative;
     bottom: -10px;
     padding: 4px;
@@ -486,7 +489,7 @@ header #title{
     border-radius: 8px;
     margin: 0 ;
     padding: 2px 6px;
-    background-image: var(--gradienttres);
+    background-image: var(--gradient);
     animation: fondo-anim 10s infinite alternate;
     background-size: 400%;
 
@@ -514,16 +517,13 @@ header #title{
     row-gap: 15px;
 }
 .edit-button-container button {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: var(--font_family); 
     border: 2px solid transparent;
     border-radius: 4px;
     cursor: pointer;
     transition: ease-in-out 0.2s;
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.3);
 }
-.edit-button-container button:hover{
-    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0,0.3);
-}
+
 .cancel-btn{
     background-color: tomato;
     color: white;
@@ -574,7 +574,6 @@ header #title{
     position: relative;
     width: 80vw;
     left: 14%;
-    font-weight: 300;
 }
 
 .empty-message{
@@ -637,10 +636,9 @@ header #title{
     width: fit-content;
     height: 100px;
     padding: 15px;
-    background-color: #fbfbfb;
+    background-color: #f1f1f1;
     border-radius: 4px;
-    box-shadow: 0 4px 5px rgb(0, 0, 0,0.3);
-    border: 3px solid #949494;
+    border: none;
 }
 .show{
     pointer-events: auto;
@@ -672,7 +670,7 @@ header #title{
 }
 .delete-btn{
     border: 1px solid transparent;
-    background-color: rgb(197, 68, 46);
+    background-color: tomato;
     color: white;
 }
 
@@ -682,10 +680,9 @@ header #title{
     width: 100%;
 }
 .card-deleted-message p{
-    background-color: rgb(31, 162, 255);
+    background-color: rgb(223, 223, 223);
     margin: 0 auto;
     border-radius: 3px;
-    color: rgb(255, 255, 255);
     padding: 5px 8px;
     font-size: 14px;
     font-weight: 500;
@@ -694,7 +691,7 @@ header #title{
 }
 
 .card textarea{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family:var(--font_family); 
     font-weight: 300;
     font-size: 16px;
     margin-top: 15px;
@@ -713,6 +710,28 @@ header #title{
     margin-right: 5px;
 }
 
+
+
+.filter-tasks{
+    position: relative;
+    width: 80vw;
+    left: 54%;
+    transform: translateX(-50%);
+}
+.filter-tasks button{
+    font-family: var(--font_family);
+    background-color: transparent;
+    border: none;
+    padding: 8px 0px;
+    margin-right: 17px;
+
+}
+.filter-tasks .current-tasks-btn{
+   
+}
+.filter-tasks .done-tasks-btn{
+    color: #959595;
+}
 
 
 

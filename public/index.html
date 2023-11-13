@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="logo (8).png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&family=Karla:wght@200;300;400;500;600;700&family=Manrope:wght@200;300;500;600;800&display=swap" rel="stylesheet">
     <title>Zero Focus</title>
 </head>
 <body>
@@ -24,7 +27,7 @@
     <!-- Todo task input -->
     <form id="card-form" class="task-form">
         
-        <input type="text" name="task" id="task-input" placeholder="Daily task " required minlength="1" maxlength="230">
+        <input type="text" name="task" id="task-input" placeholder="What are your tasks today?" required minlength="1" maxlength="230">
         <button type="submit" id="createTask-btn"><img id="submit-icon" src="angle-right (2).png" alt="create task" style="width: 15px;"></button>
     </form>
 
@@ -42,17 +45,24 @@
         </div>
     </div>
     <div class="tag-message" id= "tag-message">
-    
     </div>
+
+
 
     
     <!--Filter-->
-    
+    <div class="filter-tasks" id="filter-tasks">
+        <button type="button" class="current-tasks-btn" id="current-tasks-btn">⚡Current</button>
+        <button type="button" class="done-tasks-btn" id="done-tasks-btn">🔥 Done</button>
+    </div>
    
     <div class="empty-message" id="empty-message"></div>
+
     <!--Task cards container flexbox -->
     <div class="card-container" id="card-container">
     </div>
+
+
 
     <div class="confirm-container" id="confirm-container">
         <div class="confirm">
