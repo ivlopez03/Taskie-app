@@ -23,7 +23,9 @@ async function renderTags(tags_array){
 
 async function renderTagsCard(card){
     const tags_dropped = document.querySelector(`.tag-${card}`)
-    tags_dropped.parentNode.removeChild(tags_dropped)
+    if(tags_dropped != null){
+        tags_dropped.parentNode.removeChild(tags_dropped)
+    }
     const response = await fetch(`/cards/${card}`)
     //fetch to get card by its id 
     const cards = await response.json()
@@ -61,6 +63,8 @@ const openMenu = async (cardID)=>{
     }
 }
 
+
+
 async function startTask(cardID){
     const started_task = document.getElementById(`card-header-${cardID}`);
     const card_menu_format = `menu-open-${cardID}`
@@ -89,6 +93,7 @@ async function startTask(cardID){
         
     const done_button = document.createElement('li')
     done_button.setAttribute('id',`done-task-${cardID}`)
+    done_button.setAttribute('class','options-hover')
 
     const img = document.createElement('img')
     img.src='check.png'
@@ -137,8 +142,9 @@ async function deleteCard(cardID) {
 
 }
 
-async function editCard(cardID,textCard){
+function editCard(cardID){
     const card = document.getElementById(`${cardID}`)
+    const card_text = document.getElementById(`task-text-${cardID}`)
     card.classList.add('card_edit_mode')
     card.style.transform = 'none'
 
@@ -150,42 +156,100 @@ async function editCard(cardID,textCard){
     const menuOptions = document.getElementById(`menu-open-${cardID}`);
     menuOptions.style.display = "none";
 
-    //Add 2 buttons
-    //button 1: Cancel button
-    card.innerHTML += `<button class="edit-cancel-btn" id="edit-cancel-btn">Cancel</button>`
-    //button 2: Submit button
-    card.innerHTML += `<button class="edit-submit-btn" id="edit-submit-btn">Submit</button>`    
+    const getEditbtn = document.getElementsByClassName('edit-btn');
+    const editButtonList = [... getEditbtn]
+    editButtonList.forEach(editButton =>{
+        editButton.style.filter = 'invert(0.7)'
+        editButton.removeAttribute('onclick')
+        editButton.classList.remove('options-hover')
+    })
 
+    //Add 2 buttons 
+    const button_container = document.createElement('div')
+    button_container.setAttribute('class', 'edit-button-container')
+    card.appendChild(button_container)
+
+    const get_button_container = document.querySelector('.edit-button-container')
+    //button 1: Cancel button
+    get_button_container.innerHTML += `<button class="edit-button cancel-btn" id="edit-cancel-btn">Cancel</button>`
+    //button 2: Submit button
+    get_button_container.innerHTML += `<button class="edit-button submit-btn" id="edit-submit-btn">Submit</button>`    
+
+    
     //Add edit form 
     //Add  contentEditable="true"
     const text = document.getElementById(`task-text-${cardID}`)
-    text.setAttribute('contentEditable','true')
-    text.setAttribute('minlength','1')
-    text.setAttribute('maxlength','230')
-
     const textParent = text.parentNode;
         
     const textarea = document.createElement('textarea')
     textarea.setAttribute('id',`task-text-${cardID}`)
     textarea.setAttribute('minlength','1')
     textarea.setAttribute('maxlength','230')
-    textarea.textContent = textCard
+    textarea.textContent = card_text.innerHTML
 
     textParent.replaceChild(textarea,text)
         
+    //Create function to get array of card tags
+    function getCardTagsArray(cardID){
+        let tagsList = document.getElementsByClassName(`card-id-${cardID}`)
+        let tags = [... tagsList]
+        return tags
+    }
+    
 
-    //crear una lista con las tags de la card
-    let tagsList = document.getElementsByClassName(`card-id-${cardID}`)
-    let tags = [... tagsList]
-    console.log(tagsList)
-    tags.forEach(tag => {
-        console.log(tag.id)
+    //Add remove button to each tag
+    getCardTagsArray(cardID).forEach( tag => {
+        tag.style.borderRadius = '8px'
+        tag.style.padding = '4px 8px'
+        tag.innerHTML += `<button class="remove-tagcard-btn" id="remove-${tag.id}" ><img src="cross.png" width="8px" ></button>`
+        
+        const remove_tag = document.getElementById(`remove-${tag.id}`)
+        remove_tag.addEventListener('click', () =>{
+            tag.parentNode.removeChild(tag)
+            
+        })
     })
-    //agregar un boton para remover las tags del html y actualizar la lista de tags
+    
 
-    //agregar funcion para cancel button
-    //agregar funcion para submit button, crear un fetch para actualizar el texto y las tags(usar array creado )
+    //Add cancel button fuction
+    const cancelButton = document.getElementById('edit-cancel-btn')
+    cancelButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        card.classList.remove('card_edit_mode')
+        getTasks()
+    })
 
+    //add  submiy button listener for make a Fetch request to update the card
+    const submitButton = document.getElementById('edit-submit-btn')
+    submitButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const text = document.getElementById(`task-text-${cardID}`)
+        console.log(text.value)
+        if (text.value != ''){
+            let tags = []
+            getCardTagsArray(cardID).forEach(tag => { tags.push(tag.id) })
+
+            const new_task_form = {
+                text: text.value,
+                tags: tags 
+            }
+
+            //console.log(new_task_form)
+            await fetch(`/cards/${cardID}`,{
+                method: 'PUT',
+                body: JSON.stringify(new_task_form),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            getTasks()
+
+        }else{
+            textarea.setAttribute('placeholder','Input cannot be blank; please enter text.') 
+        }
+        
+    })
 
 }
 
@@ -215,9 +279,9 @@ const getTasks = async () => {
         <div id="tags-card-list-${card._id}" class="tags-card-list"></div>
         <div id="menu-open-${card._id}" class="menu-open" style="display:none">
               <menu class="menu-options" id="menu-options">
-                    <li id="start-task-${card._id}" onclick=startTask('${card._id}') ><img src="play (5).png" >Start</li>
-                    <li id="close-task-${card._id}" onclick=deleteCard('${card._id}') ><img src="trash (7).png"></img>Delete</li>
-                    <li id="edit-task-${card._id}" onclick=editCard('${card._id}','${card.text}') ><img src="file-edit (3).png" ></img>Edit</li>
+                    <li class="options-hover" id="start-task-${card._id}" onclick=startTask('${card._id}') ><img src="play (5).png" >Start</li>
+                    <li class="options-hover" id="close-task-${card._id}" onclick=deleteCard('${card._id}') ><img src="trash (7).png"></img>Delete</li>
+                    <li class="edit-btn options-hover" id="edit-task-${card._id}" onclick=editCard("${card._id}") ><img src="file-edit (3).png" ></img>Edit</li>
                 </menu>
         </div>
     </div>
@@ -256,6 +320,7 @@ const getTasks = async () => {
         
             const done_button = document.createElement('li')
             done_button.setAttribute('id',`done-task-${card._id}`)
+            done_button.setAttribute('class','options-hover')
 
             const img = document.createElement('img')
             img.src='check.png'
@@ -282,10 +347,10 @@ const getTags = async () => {
     if(tags.length == 0){
         const message = document.getElementById('tag-message');
         message.innerHTML = `<p id="message">Add custom tags</p>`
-    }else{
-        const message = document.getElementById('tag-message');
-        message.innerHTML = `<p id="text-drag" class="text-drag show-message" ><span><img src="curved-arrow (1).png" alt="curve-arrow" width="30px"></span>Assign tags to cards by dragging and dropping them onto the cards.(max. 5 tags per card)</p>`
-    }
+    }//else{
+        //const message = document.getElementById('tag-message');
+       // message.innerHTML = `<p id="text-drag" class="text-drag show-message" ><span><img src="curved-arrow (1).png" alt="curve-arrow" width="30px"></span>Assign tags to cards by dragging and dropping them onto the cards.(max. 5 tags per card)</p>`
+    //}
     
     
     //Create template to print list of tags
