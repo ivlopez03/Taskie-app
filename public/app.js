@@ -70,7 +70,7 @@ async function startTask(cardID){
     const card_menu_format = `menu-open-${cardID}`
     const menuOptions = document.getElementById(card_menu_format);
     started_task.innerHTML += `<div id="${cardID}"  class="started-task">
-                                    <p>IN PROGRESS</p>
+                                    <p>In The Making</p>
                                 </div>`
 
     menuOptions.style.display = "none";
@@ -312,7 +312,7 @@ const getTasks = async () => {
             const started_task = document.getElementById(`card-header-${card._id}`);
             const start_button = document.getElementById(`start-task-${card._id}`)
             started_task.innerHTML += `<div id="${card._id}"  class="started-task">
-                                    <p>IN PROGRESS</p>
+                                    <p>In The Making</p>
                                 </div>`
             //start_button.parentNode.removeChild(start_button)
 
