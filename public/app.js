@@ -185,6 +185,7 @@ function editCard(cardID){
     textarea.setAttribute('id',`task-text-${cardID}`)
     textarea.setAttribute('minlength','1')
     textarea.setAttribute('maxlength','230')
+    textarea.style.resize = 'none'
     textarea.textContent = card_text.innerHTML
 
     textParent.replaceChild(textarea,text)
