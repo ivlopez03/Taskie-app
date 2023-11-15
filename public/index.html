@@ -34,59 +34,70 @@
     <div class="delete-message" id="delete-message"></div>
    
 
-    <!-- Tags Navigation container 
-    <div class="tags-nav">
-        <button id="addTags-btn">Add Tags <img src="plus-small.png" alt="" style="width: 17px;"></button>
-        <div class="delete-tag-container" id="delete-tag-container"><img src="trash (6).png" alt=""></div>
-        <div class="tags-container">
-            <div>
+   <main>
+    <div class="main-container" id="main-container">
+
+        <div class="tags-nav">
+            <div class="tags">
+                <span>⚡ Tags</span>
+                <label for="" class="view-tags-container" onclick="checkViewTags()">
+                    <input type="checkbox" name="view-tags" id="view-tags" checked>
+                </label>
+            </div>
+            <div class="tags-container">
                 <ul id="tags-list"></ul>
             </div>
-        </div>
-    </div>
-    <div class="tag-message" id= "tag-message">
-    </div>
-    -->
-
-    <!--Filter-->
-    <div class="filter-tasks" id="filter-tasks">
-        <div class="tag-container-demo" >
-            <div class="tags">
-                <span>Tags</span>
-                <button><img src="plus-small.png" alt="add tags" width="20px"></button>
-            </div>
-            <div class="tags-list-demo">
-                <ul>
-                    <li>Tag one</li>
-                    <li>Tag Two</li>
-                    <li>Tag Three</li>
-                    <li>Tag Four</li>
-                    <li>Tag Five</li>
-                    <li>Tag Six</li>
-                    <li>Tag one</li>
-                    <li>Tag Two</li>
-                    <li>Tag Three</li>
-                    <li>Tag Four</li>
-                    <li>Tag Five</li>
-                    <li>Tag Six</li>
-                </ul>
-            </div>
             <div class="box-style"></div>
+            <button id="addTags-btn">Add tag<img src="plus-small.png" alt="" style="width: 20px;"></button>
+            <div class="delete-tag-container" id="delete-tag-container"><p id="trash-tags" style="font-size: 20px;margin: 0px;">🗑️</p></div>
+            <div class="tag-message" id= "tag-message"></div>
+
+            <!-- Add tags preview container -->
+            <div class="modal-container" id="modal_container">
+                <div class="modal">
+                    <form id="create-tags-form" class="modal-form">
+                        <div>
+                            <button id="close-btn" type="reset">❌</button>
+                        </div>
+                
+                        <div class="tag-demo">
+                            <span>Tag preview</span>
+                            <div id="pre-tag"></div>
+                        </div>
+                        <div class="tagname-initial">
+                            <label>Tag:</label>
+                            <input type="text" name="tag" id="tagname"  required minlength="1" maxlength="25">
+                        </div>
+                        <div class="edit-tag">
+                            <label>Backgroud color:</label>
+                            <input type="color" name="background_color" class="input-color" id="backg-color" value="#FFFFFF" >
+                        
+                            <label  >Border color:</label>
+                            <input type="color" name="border_color" class="input-color" id="bor-color" value="#4197F3">
+                        
+                            <label>Text color:</label>
+                            <input type="color" name="text_color" class="input-color" id="text-color" value="#126ABD">
+                        </div>
+                        <button type="submit" id="createTag-btn">Create</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        
-        <button type="button" class="current-tasks-btn" id="current-tasks-btn">⚡ Tasks to Complete</button>
-        <button type="button" class="done-tasks-btn" id="done-tasks-btn">🔥 Completed Tasks</button>
+
+        <div class="navigation-btn">
+            <button type="button" class="current-tasks-btn" id="current-tasks-btn">☕ Tasks to Complete</button>
+            <button type="button" class="done-tasks-btn" id="done-tasks-btn">🔥 Completed Tasks</button>
+        </div>
     </div>
    
     <div class="empty-message" id="empty-message"></div>
-
-
    
 
-
     <!--Task cards container flexbox -->
-    <div class="card-container" id="card-container">
+    <div>
+        <div class="card-container" id="card-container"></div>
     </div>
+    
 
 
 
@@ -103,35 +114,11 @@
             </form>
         </div>
     </div>
-    <!-- Add tags preview container -->
-    <div class="modal-container" id="modal_container">
-        <div class="modal">
-            <form id="create-tags-form" class="modal-form">
-                <div>
-                    <button id="close-btn" type="reset"><img src="cross.png" alt=""></button>
-                </div>
-        
-                <div class="tag-demo" id="pre-tag">
-                    <span>Tag preview</span>
-                </div>
-                <div class="tagname-initial">
-                    <label>Tag:</label>
-                    <input type="text" name="tag" id="tagname"  required minlength="1" maxlength="25">
-                </div>
-                <div class="edit-tag">
-                    <label>Backgroud color:</label>
-                    <input type="color" name="background_color" class="input-color" id="backg-color" value="#FFFFFF" >
-                
-                    <label  >Border color:</label>
-                    <input type="color" name="border_color" class="input-color" id="bor-color" value="#4197F3">
-                
-                    <label>Text color:</label>
-                    <input type="color" name="text_color" class="input-color" id="text-color" value="#126ABD">
-                </div>
-                <button type="submit" id="createTag-btn">Create</button>
-            </form>
-        </div>
-    </div>
+   </main>
+
+    <footer>
+        <p >This website was made with 💙 by <span style="border-bottom: 1px dashed #a1a1a1;"><a href="https://github.com/ivlopez03" target="_blank" style="text-decoration:none;color: #a1a1a1;">@ivlopez03</a></span></p>
+    </footer>
 
 
     
@@ -149,8 +136,8 @@
     });
     
     close.addEventListener('click', () => {
-      modal_container.classList.remove('show');
-      tag_demo.innerHTML = `<span>Tag preview</span>`
+      modal_container.classList.replace('show','close');
+      tag_demo.innerHTML = ``
     });
 
     const container_draggable = document.getElementById('delete-tag-container')
@@ -192,8 +179,22 @@
         container_draggable.style.removeProperty('background-color')
     });	
 
+    const view_tag_checkbox = document.getElementById('view-tags')
+    const tags_container_view = document.querySelector('.tags-nav')
+
+    function checkViewTags(){
+        if(view_tag_checkbox.checked == true) {
+            tags_container_view.style.opacity = '1'
+            tags_container_view.style.filter = 'none'
+        }else{
+            tags_container_view.style.opacity = '15%'
+            tags_container_view.style.filter = 'blur(0.5px)'
+        }
+    }
+    
 
 
+   
     
 
 

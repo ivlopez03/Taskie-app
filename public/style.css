@@ -13,7 +13,8 @@
 
 body{
     font-family: var(--font_family);
-    margin: 0;
+    overflow-x: hidden;
+    display: grid;
 }
 
 
@@ -43,6 +44,7 @@ header #title{
     align-items: center;
     justify-content: center;
     margin-bottom: 80px;
+    width: 100%;
 }
 #task-input{
     padding: 10px;
@@ -51,6 +53,7 @@ header #title{
     outline: none;
     width: 40%;
     border-color: #a7a7a7;
+    font-family: var(--font_family);
 }
 
 #createTask-btn{
@@ -80,60 +83,116 @@ input::placeholder{
 }
 
 /* _____________________________________________ Tags Navigation __*/
-.tags-nav{
-    width: 40%;
-    margin: 0 auto;
-    margin-top: 70px;
-    margin-bottom: 0px;
-    height: fit-content;
-    
+
+
+.view-tags-container{
+    position: relative;
+    top: 10px;
+    right: 17px;
+    float: inline-end;
 }
-.tags-nav button{
-    font-family:var(--font_family) ;
-    border: none;
+#view-tags {
     background-color: transparent;
+    border: none;
     cursor: pointer;
-    border-radius: 3px;
-    font-size: 16px;
-    padding: 4px 8px;
-   
-    
+    position: absolute;
 }
+.view-tags-container img{
+    position: absolute;
+    cursor: pointer;
+}
+
+
+
+.tags-nav{
+    position: sticky;
+    top: 0;
+    float: left;
+    margin-right: 0px;
+    font-weight: 300;
+    transition: 0.4s ease-in-out;
+    z-index: 3;
+}
+
+
+.tags-nav .tags{
+    border-bottom: 1px solid #d6d6d6;
+    height: 37px;
+}
+.tags-nav span{
+    position: relative;
+    top: 7px;
+}
+.tags-nav  #addTags-btn{
+    margin: 0px;
+    padding: 2px 0px;
+    position: relative;
+    top: 5px; 
+    margin-right: 3px;
+    border: 2px solid transparent;
+}
+
 .tags-nav button img{
     position: relative;
-    top: 2.5px;
-    margin-left: 3px;
+    top: 5px;
+    padding: 0;
+    margin: 0;
+    margin-left: 4px;
+}
 
-   
+.tags-nav #addTags-btn:hover{
+    border-bottom: 2px dashed #000000;
 }
-.tags-nav button:hover{
-   background-color: #0000000a;
-}
+
 
 
 .tags-container{
-    margin-top: 15px;
-    display: flex;
-    width: 100%;
+    overflow-y: scroll;
+    height: 400px;
+    direction: rtl;
+    width: 150px;
+
 }
 
 .tags-container ul{
-   display:flex ;
+    direction: ltr;
     list-style: none;
-    margin:0;
-    padding: 0;
-    flex-wrap: wrap;
+    margin: 0px;
+    margin-right: 35px;
+    padding: 15px 0px;
+    margin-left: 4px;
 }
 .tags-container li{
     margin-top: 3px;
     font-size: 12px;
-    margin-right: 8px;
     border-radius: 10px;
     border: 1px solid transparent;
-    padding: 5px;
+    padding: 2px 6px;
+    margin-bottom: 10px;
+    width: fit-content;
+    height: 15px;
+}
+.tag{
+    cursor: grab;
 }
 
 
+.tags-container::-webkit-scrollbar{
+    width: 7px;
+    height: 8px;
+    
+}
+.tags-container::-webkit-scrollbar-button:increment,.tags-list-demo::-webkit-scrollbar-button:decrement{
+    display: none;
+}
+.tags-container::-webkit-scrollbar-thumb{
+    background-color: #a1a1a1;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+.tags-container::-webkit-scrollbar-track{
+    border-radius: 10px;
+}
 
 .tag-container input{
     opacity: 0;
@@ -147,26 +206,18 @@ input::placeholder{
     cursor:         grab;
     user-select:none;
 }
-.tag{
-    padding: 4px;
-}
-.checkmark{
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 15px;
-    width:15px;
-    background-color: aliceblue;
-}
+
+
 .delete-tag-container{
-    float: right;
     padding: 5px;
     transition: ease-in-out 0.2s;
+    margin-top: 30px;
+    width: fit-content;
 }
-.delete-tag-container img{
-    width: 23px;
 
-}
+
+
+
 
 .delete-message{
     text-align: center;
@@ -183,23 +234,18 @@ input::placeholder{
     font-size: 15px;
     color: black;
     font-weight: 300;
-
-
 }
+
 
 .tag-message{
     padding: 3px 5px;
-    width: fit-content;
-    text-align: center;
-    margin: 0 auto;
+    width: 120px;
     margin-top: 10px;
-    margin-bottom: 5px;
 }
 .tag-message p{
     font-size: 15px;
     color: black;
     margin: 0;
-    text-align: center;
     font-weight: 500;
 }
 #message{
@@ -270,11 +316,10 @@ input::placeholder{
 /* ____________________________________________ Task cards container flebox __*/
 
 .card-container{
+    position: relative;
     margin-top: 15px;
     width: 80vw;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    z-index: 1;
     
     display: grid;
     grid-template-columns: repeat(auto-fill,var(--card_width));
@@ -335,30 +380,23 @@ input::placeholder{
 
 /* ____________________________________________ Menu tags preview  __*/
 .modal-container{
-    position: fixed;
-    top: -150px;
-    float: left;
+    position: absolute;
     opacity: 0;
+    transform: translate(-2%, -50%);
     pointer-events: none;
     transition: opacity 0.3s ease;
-    margin-left: 20px;
-   
-}
-.modal{
-   margin-top: 180px;
 }
 
-.show{
-    pointer-events: auto;
-    opacity: 1;
-    z-index: 1;
+#createTag-btn{
+    margin: 0;
 }
+
 #close-btn{
     float: right;
-    padding: 4px;
+    padding: 2px;
     margin: 0;
-    border: 0.1px solid #5b5b5b;
-    background-color: tomato;
+    border: 0.1px solid transparent;
+    background-color: transparent;
     border-radius: 3px;
 }
 #close-btn:hover{
@@ -378,13 +416,18 @@ input::placeholder{
     height: 170px;
     font-weight: 400;
     padding: 8px;
-    background-color: #f6f6f6;
+    background-color: rgb(255 252 229);
     border-radius: 4px;
-    border: 1px solid #bebebe;
+    border: 3px solid #d4d4d4;
 
 }
 
-#taggie{border-radius: 3px;}
+#taggie{
+    border-radius: 10px;
+    padding: 4px;
+    margin-top: 16px;
+    font-size: 14px;
+}
 
 #create-tags-form{
     text-align: center;
@@ -394,6 +437,7 @@ input::placeholder{
     border: 1px solid rgb(179, 179, 179);
     border-radius: 3px;
     padding: 2px;
+    font-family: var(--font_family);
     
 }
 .modal-form .edit-tag{
@@ -423,9 +467,37 @@ input::placeholder{
     cursor: pointer;
 }
 .tagname-initial{
-    margin-top: 20px;
+    margin-top: 40px;
+}
+#pre-tag{
+    width: fit-content;
+    text-align: center;
+    margin: 0 auto;
+}
+.close{
+    animation-name: slideout;
+    animation-duration: 2s;
 }
 
+@keyframes slidein {
+    from {
+        transform: translate(-103%, -50%)
+    }
+  
+    to {
+        transform: translate(-2%, -50%)
+    }
+  }
+
+  @keyframes slideout {
+    from {
+        transform: translate(-2%, -50%)
+    }
+  
+    to {
+        transform: translate(-103%, -50%)
+    }
+  }
 
 /* ____________________________________________ Task Cards Submenu __*/
 
@@ -472,7 +544,6 @@ input::placeholder{
     border: none;
     visibility: hidden;
     display: none;
-    
 }
 
 .menu-options li img{
@@ -481,7 +552,7 @@ input::placeholder{
 }
 
 .started-task{
-    position: fixed;
+    position: absolute;
     width: fit-content;
     background-color: #000000;
     color: white;
@@ -555,9 +626,9 @@ input::placeholder{
     margin-bottom: 2px;
     border: 1px solid ;
     padding: 2px;
-   
-
+    
 }
+
 
 .tags-card-list{
     position: relative;
@@ -583,7 +654,8 @@ input::placeholder{
     color: #aeaeae;
 }
 .empty-message p{
-    margin: 0;
+    margin: 0 auto;
+    width: fit-content;
 }
 
 .text-drag{
@@ -643,7 +715,14 @@ input::placeholder{
 .show{
     pointer-events: auto;
     opacity: 1;
-    z-index: 1;
+    z-index: 3;
+    animation-name: slidein;
+    animation-duration: 1s;
+}
+.show-delete-message{
+    pointer-events: auto;
+    opacity: 1;
+    z-index: 3;
 }
 .btn-container{
     position: relative;
@@ -702,9 +781,10 @@ input::placeholder{
 }
 
 .remove-tagcard-btn{
-    background-color: tomato;
+    background-color: transparent;
     border: none;
     cursor: pointer;
+    padding: 0;
     border-radius: 100%;
     float: left;
     margin-right: 5px;
@@ -712,13 +792,14 @@ input::placeholder{
 
 
 
-.filter-tasks{
-    position: relative;
+.main-container{
+    position: sticky;
+    top: 0;
     width: 80vw;
-    left: 42%;
-    transform: translateX(-50%);
+    z-index: 2;
+    
 }
-.filter-tasks button{
+.main-container button{
     font-family: var(--font_family);
     background-color: transparent;
     border: none;
@@ -727,76 +808,46 @@ input::placeholder{
     font-size: 15px;
     cursor: pointer;
 }
-.filter-tasks .current-tasks-btn{
+.main-container .current-tasks-btn{
    font-weight: 600;
-   border-bottom: 3px solid rgb(0, 0, 0);
+   
 }
-.filter-tasks .done-tasks-btn{
+.main-container .done-tasks-btn{
     font-weight: 200;
     color: #959595;
 }
 
-
-.tag-container-demo{
-    float: left;
-    margin-right: 80px;
-    color: #d1d1d1;
-    font-weight: 300;
-}
-.tag-container-demo .tags{
-    border-bottom: 2px solid #dcdcdc;
-    height: 37px;
-}
-.tag-container-demo button{
-    float: inline-end;
-    margin: 0px;
-    padding: 0;
-    position: relative;
-    top: 5px;
-    border-radius: 4px;
-}
-.tag-container-demo button:hover{
-    background-color: rgba(149, 149, 149, 0.277);
-}
-.tag-container-demo img{
-    position: relative;
-    top: 2px;
-    padding: 0;
-    margin: 0;
-    filter: invert(0.8);
-}
-.tag-container-demo span{
-    position: relative;
-    top: 7px;
-}
-
-.tags-list-demo ul{
-    list-style: none;
-    margin: 0px;
-    margin-right: 35px;
-    padding: 15px 0px;
-}
-.tags-list-demo li{
-    margin-bottom: 10px;
-    border: 1px solid #e3e3e3;
-    border-radius: 10px;
-    padding: 2px 5px;
-}
-.tags-list-demo li:hover{
-    border-color: #0a162e;
-    background-color: #0a162e;
-    color: white;
-    cursor: grab;
-}
 .box-style{
     position: relative;
-    top: -290px;
-    background-color: #000000;
-    width: 100px;
-    height: 280px;
-    background: linear-gradient(rgba(255, 255, 255, 0.108), rgb(253, 253, 253), rgb(253, 253, 253));
+    top: -20px;
+    width: 140px;
+    height: 20px;
+    background: linear-gradient(rgba(255, 255, 255, 0.108), rgb(253, 253, 253));
+    
+}
+.navigation-btn{
+    position: relative;
+    width: 100%;
+    left: 5%;
+    background: linear-gradient( rgb(253, 253, 253) 70%, rgba(255, 255, 255, 0.108));
+    
 }
 
+footer{
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    width: 100vw;
+    padding-top: 80px;
+    color: #a1a1a1;
+}
+footer p{
+    font-weight: 300;
+    margin: 0 auto;
+    width: fit-content;
+}
 
 
 
