@@ -8,7 +8,7 @@ connect.database_connect;
 const createCard = async (req,res) =>{
     const {body} = req
     try {
-        const new_card = new Card({date: body.date ,text: body.text, tags: body.tags})
+        const new_card = new Card({date: body.date ,text: body.text, tags: body.tags,isCompleted: body.isCompleted})
         const saveCard = await new_card.save();
         console.log(saveCard)
         res.send('Creating card:' + new_card._id)

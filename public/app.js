@@ -118,8 +118,9 @@ async function deleteCard(cardID) {
     const confirm_button = document.getElementById('confirm-deletion-btn')
     const cancel_button = document.getElementById('cancel-deletion-btn')
     const delete_box = document.getElementById('confirm-container')
-    const deleted_message = document.getElementById('card-deleted-message')
+    const notification = document.getElementById('notification')
     delete_box.classList.add('show-delete-message');
+    
 
     confirm_button.addEventListener('click',async function(e){
         e.preventDefault();
@@ -130,10 +131,11 @@ async function deleteCard(cardID) {
         card.parentNode.removeChild(card)
         delete_box.classList.remove('show-delete-message');
 
-        deleted_message.innerHTML += `<p> The Task has been deleted successfully ! </p>`;
+        notification.innerHTML = `<p> The Task has been deleted successfully ! </p>`;
+        notification.classList.add('show-notification')
         setTimeout(function(){
-            deleted_message.innerHTML = ' ';
-        }, 3000);
+            notification.classList.replace('show-notification','close-notification')
+        }, 2500);
         
     })
 
@@ -569,14 +571,17 @@ async function addTagCard(cardId){
 
 //___________________________________________________________________________________________________DELETE TAGS FROM NAVIGATION__.
 const deleteTagsCard = async (tagID)=>{
-    const message_container =document.getElementById('delete-message'); 
+    const notification = document.getElementById('notification')
+
+
     await fetch(`/tags/${tagID}`,{
         method: 'DELETE'
     }).then(() => {
-        message_container.innerHTML = `<p>The tag has been deleted successfully !</p>`
+        notification.innerHTML = `<p>The tag has been deleted successfully</p>`
+        notification.classList.add('show-notification')
         setTimeout(function(){
-            message_container.innerHTML = '';
-        }, 3000);
+            notification.classList.replace('show-notification','close-notification')
+        }, 2500);
 
         getTags()
 
@@ -625,13 +630,15 @@ const taskFormListener = ()=>{
         const getTask =  card_data.task
         const date = new Date(Date.now());//get instance of Date
         const date_format = date.toLocaleDateString(); // format date response
+        
+
 
         const taskForm = {
             "date": date_format,
             "text": getTask,
             "tags": [],
             "active": false,
-            "isCompleted": false
+            "isCompleted": false,
         }
 
         await fetch('/cards',{

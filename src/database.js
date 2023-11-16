@@ -23,7 +23,7 @@ export const Card = mongoose.model('Card',{
     text: {type: String,required: true},
     tags: {type: Array,required: true},
     active: {type: Boolean},
-    isCompleted: {type: Boolean},
+    isCompleted: {type: Boolean,required: true},
     isPinned:{type: Boolean}
 });
 
