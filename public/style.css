@@ -27,7 +27,7 @@ header {
     text-align: center;
     justify-content: center;
     margin-top: 140px;
-    margin-bottom: 50px;
+    
 }
 
 header #title{
@@ -377,7 +377,13 @@ input::placeholder{
     cursor: pointer;
     margin-right: 5px;
 }
-
+#date span{
+    font-size: 21px;
+    margin-right: 4px;
+    position: absolute;
+    right: 7px;
+    bottom: 11px;
+}
 /* ____________________________________________ Menu tags preview  __*/
 .modal-container{
     position: absolute;
@@ -623,7 +629,7 @@ input::placeholder{
     flex-wrap: wrap;
     margin-right: 4px;
     font-size: 13px;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
     border: 1px solid ;
     padding: 2px;
     
@@ -849,6 +855,14 @@ footer p{
     width: fit-content;
 }
 
+.completed-task{
+    position: absolute;
+    right: 24px;
+}
+.completed-task p{
+    margin: 0;
+    padding: 3px 7px;
+}
 
 
 

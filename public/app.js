@@ -264,32 +264,107 @@ function editCard(cardID){
 
 }
 
-function pinCard(cardID){
+async function pinCard(cardID){
+
+
     const card = document.getElementById(cardID)
     card.style.gridRowStart = 'none'
+    const pinned = document.getElementById(`card-pinned-${cardID}`)
+    pinned.textContent = '📌'
+
+
+    const isPinnedForm = {
+        "isPinned": true
+    }
+
+    //fetch to edit database with the new tags added by dragging and dropping;
+    await fetch(`/cards/${cardID}`,{
+        method: 'PUT',
+        body: JSON.stringify(isPinnedForm),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    const pin_btn = document.getElementById(`pin-card-${cardID}`)
+    pin_btn.textContent = '📌 unpin'
+    pin_btn.removeAttribute('onclick')
+    pin_btn.setAttribute('onclick',`unpinCard("${cardID}")`)
 
 }
+async function unpinCard(cardID){
+
+
+    const card = document.getElementById(`${cardID}`)
+    card.style.removeProperty("grid-row-start")
+    const pinned = document.getElementById(`card-pinned-${cardID}`)
+    pinned.textContent = ''
+
+
+    const isPinnedForm = {
+        "isPinned": false
+    }
+
+    //fetch to edit database with the new tags added by dragging and dropping;
+    await fetch(`/cards/${cardID}`,{
+        method: 'PUT',
+        body: JSON.stringify(isPinnedForm),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    const pin_btn = document.getElementById(`pin-card-${cardID}`)
+    pin_btn.textContent = '📌 Pin'
+    pin_btn.removeAttribute('onclick')
+    pin_btn.setAttribute('onclick',`pinCard("${cardID}")`)
+
+}
+
+
+
 
 async function doneTask(cardID){
-    const card =document.getElementById(`${cardID}`)
-    card.style.filter='grayscale(0.5) opacity(0.6)'
+    
+    const isCompletedForm = {
+        "isCompleted": true
+    }
 
-    const started_task = document.getElementById(`card-header-${cardID}`);
-    const card_menu_format = `menu-open-${cardID}`
-    const menuOptions = document.getElementById(card_menu_format);
-    started_task.innerHTML += `<div id="started-${cardID}"  class="started-task">
-                                    <p>✔️ Completed</p>
-                                </div>`
+    //fetch to edit database with the new tags added by dragging and dropping;
+    await fetch(`/cards/${cardID}`,{
+        method: 'PUT',
+        body: JSON.stringify(isCompletedForm),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
 
-    menuOptions.style.display = "none";
-    const tag_mark = document.getElementById(`started-${cardID}`)
-    tag_mark.style.backgroundColor = 'black'
-    tag_mark.style.backgroundImage = 'none'
-
-
+    getTasks()
 
 }
 
+
+//_______________________________________________________________________________________GET COMPLETED TASKS FROM DATABASE____.
+
+const getCompletedTasks = async () =>{
+    const response = await fetch('/card/iscompleted=true')
+    const cards = await response.json()
+    const template = card => `
+    <div class="card ${getCardSize(card.text.length)}  card-${card._id}" id="${card._id}" style="filter:opacity(0.7) grayscale(0.6);">
+        <div class="card-header" id="card-header-${card._id}">
+            <div id="date">${card.date}</div>
+            <div id="completed-${card._id}"  class="completed-task">
+                <p>✔️ Completed</p>
+            </div>
+        </div>
+        <p id="task-text-${card._id}">${card.text}</p>
+        <div id="tags-card-list-${card._id}" class="tags-card-list"></div>
+    </div>
+    `
+    const cardList = document.getElementById('card-container')
+    cardList.innerHTML = cards.map(card => template(card)).join('')
+
+}
 
 
 
@@ -297,7 +372,7 @@ async function doneTask(cardID){
 // getTasks() async Function to get task from database and return html elements in order to display them.
 const getTasks = async () => {
     //Create fetch to API
-    const response = await fetch('/cards')
+    const response = await fetch('/card/iscompleted=false')
     const cards = await response.json() //get response in json format.
     
 
@@ -305,7 +380,7 @@ const getTasks = async () => {
     const template = card => `
     <div class="card ${getCardSize(card.text.length)}  draggable-container  card-${card._id}" id="${card._id}">
         <div class="card-header" id="card-header-${card._id}">
-            <div id="date">${card.date}</div>
+            <div id="date"><span id='card-pinned-${card._id}'></span>${card.date}</div>
             <label class="menu-container" id="submenu-${card._id}" >
             <input type="checkbox" id="show-menu-${card._id}" onclick=openMenu('${card._id}') class="menu-open-checkbox" ><img src="menu-puntos.png" style="width:20px"></img></button></input>
             </label>
@@ -370,6 +445,20 @@ const getTasks = async () => {
             doneParent.appendChild(img)
             doneParent.appendChild(span)
             
+        }
+        if (card.isPinned == true){
+            const pincard = document.getElementById(`${card._id}`)
+            pincard.style.gridRowStart = 'none'
+            const pinned = document.getElementById(`card-pinned-${card._id}`)
+            pinned.textContent = '📌'
+            
+    
+            const pin_btn = document.getElementById(`pin-card-${card._id}`)
+            pin_btn.textContent = '📌 unpin'
+            pin_btn.removeAttribute('onclick')
+            pin_btn.setAttribute('onclick',`unpinCard("${card._id}")`)
+
+
         }
     })
 
@@ -541,7 +630,8 @@ const taskFormListener = ()=>{
             "date": date_format,
             "text": getTask,
             "tags": [],
-            "active": false
+            "active": false,
+            "isCompleted": false
         }
 
         await fetch('/cards',{

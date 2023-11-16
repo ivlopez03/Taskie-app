@@ -12,5 +12,6 @@ router.put('/cards/:id',card.PUT);
 router.delete('/cards/:id',card.DELETE);
 
 router.get('/cards/:id',card.GET_BY_ID);
-
+router.get('/card/iscompleted=true',card.GET_COMPLETED_TASKS)
+router.get('/card/iscompleted=false',card.GET_OPEN_TASKS)
 export default router

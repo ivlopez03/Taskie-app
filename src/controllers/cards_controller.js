@@ -30,6 +30,19 @@ const getCards = async (req,res) =>{
 }
 //getCards()
 
+const getCompletedCards = async (req,res) =>{
+    //const iscompleted= req.query.isCompleted;
+    //console.log(iscompleted)
+    const cards = await Card.find({isCompleted: true});
+    //console.log(cards)
+    res.json(cards);
+}
+const getOpenCards = async (req,res) =>{
+    const cards = await Card.find({isCompleted: false});
+    //console.log(cards)
+    res.json(cards);
+}
+
 
 const getCardbyID = async (req,res) =>{
     try {
@@ -57,7 +70,7 @@ const editCard = async (req,res) =>{
 //example:
 //editCard({text:'Hello Karla'},{tags:['UI/UX']});
 
-const deleteCard = async (req,res,filter)=>{
+const deleteCard = async (req,res)=>{
     const{id} = req.params
     const card = await Card.findOne({_id:id})
     if(card){
@@ -74,4 +87,6 @@ export const card = {
     PUT: editCard,
     DELETE: deleteCard,
     GET_BY_ID: getCardbyID,
+    GET_COMPLETED_TASKS: getCompletedCards,
+    GET_OPEN_TASKS: getOpenCards,
 }
