@@ -5,16 +5,18 @@
     --card_small:17;
     --card_medium:21;
     --card_large:28;
-    --gradient:  linear-gradient(45deg, #e80033, #f9a852, #f69653, #f38654, #f07654, #ed6856, #ef5956, #ee4c58, #56c1ab);
-    --gradientdos: linear-gradient(30deg, #eeaeca,#e9afcc,#e2b0ce,#d7b2d2,#cbb4d6,#bfb5da,#b6b6dd,#aeb7e0,#a5b8e3,#9eb9e6);
-    --gradienttres: linear-gradient(30deg,rgba(238,174,202,1) 0%, rgba(158,185,230,1) 50%,rgba(238,174,202,1) 100%)
+    --gradient: linear-gradient(30deg,rgba(238,174,202,1) 0%, rgba(158,185,230,1) 50%,rgba(238,174,202,1) 100%);
+    --gradient_test: linear-gradient(30deg,rgb(255, 247, 156) 0%, rgb(255, 193, 106)50%,rgb(255, 247, 156) 100%);
+    --font_family: karla;
+    
 }
 
 body{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    
-    margin: 0;
+    font-family: var(--font_family);
+    overflow-x: hidden;
+    display: grid;
 }
+
 
 
 
@@ -25,7 +27,7 @@ header {
     text-align: center;
     justify-content: center;
     margin-top: 140px;
-    margin-bottom: 50px;
+    
 }
 
 header #title{
@@ -41,7 +43,8 @@ header #title{
     display: flex;
     align-items: center;
     justify-content: center;
-    
+    margin-bottom: 80px;
+    width: 100%;
 }
 #task-input{
     padding: 10px;
@@ -50,7 +53,7 @@ header #title{
     outline: none;
     width: 40%;
     border-color: #a7a7a7;
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    font-family: var(--font_family);
 }
 
 #createTask-btn{
@@ -74,61 +77,122 @@ header #title{
     top: 1px;
 }
 
+input::placeholder{
+    font-family: var(--font_family);
+    color: #d3d3d3;
+}
+
 /* _____________________________________________ Tags Navigation __*/
-.tags-nav{
-    width: 40%;
-    margin: 0 auto;
-    margin-top: 70px;
-    margin-bottom: 0px;
-    height: fit-content;
-    
+
+
+.view-tags-container{
+    position: relative;
+    top: 10px;
+    right: 17px;
+    float: inline-end;
 }
-.tags-nav button{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    border: none;
+#view-tags {
     background-color: transparent;
+    border: none;
     cursor: pointer;
-    border-radius: 3px;
-    font-size: 16px;
-    padding: 4px 8px;
-   
-    
+    position: absolute;
 }
+.view-tags-container img{
+    position: absolute;
+    cursor: pointer;
+}
+
+
+
+.tags-nav{
+    position: sticky;
+    top: 0;
+    float: left;
+    margin-right: 0px;
+    font-weight: 300;
+    transition: 0.4s ease-in-out;
+    z-index: 3;
+}
+
+
+.tags-nav .tags{
+    border-bottom: 1px solid #d6d6d6;
+    height: 37px;
+}
+.tags-nav span{
+    position: relative;
+    top: 7px;
+}
+.tags-nav  #addTags-btn{
+    margin: 0px;
+    padding: 2px 0px;
+    position: relative;
+    top: 5px; 
+    margin-right: 3px;
+    border: 2px solid transparent;
+}
+
 .tags-nav button img{
     position: relative;
-    top: 2.5px;
-    margin-left: 3px;
+    top: 5px;
+    padding: 0;
+    margin: 0;
+    margin-left: 4px;
+}
 
-   
+.tags-nav #addTags-btn:hover{
+    border-bottom: 2px dashed #000000;
 }
-.tags-nav button:hover{
-   background-color: #0000000a;
-}
+
 
 
 .tags-container{
-    margin-top: 15px;
-    display: flex;
-    width: 100%;
+    overflow-y: scroll;
+    height: 400px;
+    direction: rtl;
+    width: 150px;
+
 }
 
 .tags-container ul{
-   display:flex ;
+    direction: ltr;
     list-style: none;
-    margin:0;
-    padding: 0;
-    flex-wrap: wrap;
+    margin: 0px;
+    margin-right: 35px;
+    padding: 15px 0px;
+    margin-left: 4px;
 }
 .tags-container li{
     margin-top: 3px;
     font-size: 12px;
-    margin-right: 8px;
     border-radius: 10px;
     border: 1px solid transparent;
-    padding: 5px;
+    padding: 2px 6px;
+    margin-bottom: 10px;
+    width: fit-content;
+    height: 15px;
+}
+.tag{
+    cursor: grab;
 }
 
 
+.tags-container::-webkit-scrollbar{
+    width: 7px;
+    height: 8px;
+    
+}
+.tags-container::-webkit-scrollbar-button:increment,.tags-list-demo::-webkit-scrollbar-button:decrement{
+    display: none;
+}
+.tags-container::-webkit-scrollbar-thumb{
+    background-color: #a1a1a1;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+.tags-container::-webkit-scrollbar-track{
+    border-radius: 10px;
+}
 
 .tag-container input{
     opacity: 0;
@@ -142,26 +206,18 @@ header #title{
     cursor:         grab;
     user-select:none;
 }
-.tag{
-    padding: 4px;
-}
-.checkmark{
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 15px;
-    width:15px;
-    background-color: aliceblue;
-}
+
+
 .delete-tag-container{
-    float: right;
     padding: 5px;
     transition: ease-in-out 0.2s;
+    margin-top: 30px;
+    width: fit-content;
 }
-.delete-tag-container img{
-    width: 23px;
 
-}
+
+
+
 
 .delete-message{
     text-align: center;
@@ -178,23 +234,18 @@ header #title{
     font-size: 15px;
     color: black;
     font-weight: 300;
-
-
 }
+
 
 .tag-message{
     padding: 3px 5px;
-    width: fit-content;
-    text-align: center;
-    margin: 0 auto;
+    width: 120px;
     margin-top: 10px;
-    margin-bottom: 5px;
 }
 .tag-message p{
     font-size: 15px;
     color: black;
     margin: 0;
-    text-align: center;
     font-weight: 500;
 }
 #message{
@@ -265,11 +316,10 @@ header #title{
 /* ____________________________________________ Task cards container flebox __*/
 
 .card-container{
+    position: relative;
     margin-top: 15px;
     width: 80vw;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    z-index: 1;
     
     display: grid;
     grid-template-columns: repeat(auto-fill,var(--card_width));
@@ -287,7 +337,6 @@ header #title{
     overflow: hidden;
     font-weight: 300;
     background-color: rgba(255, 255, 255, 0.842);
-    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.4);
     transition: all .2s ease-in-out;
     row-gap: 1em;
 }
@@ -328,33 +377,32 @@ header #title{
     cursor: pointer;
     margin-right: 5px;
 }
-
+#date span{
+    font-size: 21px;
+    margin-right: 4px;
+    position: absolute;
+    right: 7px;
+    bottom: 11px;
+}
 /* ____________________________________________ Menu tags preview  __*/
 .modal-container{
-    position: fixed;
-    top: -150px;
-    float: left;
+    position: absolute;
     opacity: 0;
+    transform: translate(-2%, -50%);
     pointer-events: none;
     transition: opacity 0.3s ease;
-    margin-left: 20px;
-   
-}
-.modal{
-   margin-top: 180px;
 }
 
-.show{
-    pointer-events: auto;
-    opacity: 1;
-    z-index: 1;
+#createTag-btn{
+    margin: 0;
 }
+
 #close-btn{
     float: right;
-    padding: 4px;
+    padding: 2px;
     margin: 0;
-    border: 0.1px solid #5b5b5b;
-    background-color: tomato;
+    border: 0.1px solid transparent;
+    background-color: transparent;
     border-radius: 3px;
 }
 #close-btn:hover{
@@ -374,14 +422,18 @@ header #title{
     height: 170px;
     font-weight: 400;
     padding: 8px;
-    background-color: #ffffff;
+    background-color: rgb(255 252 229);
     border-radius: 4px;
-    border: 1px solid #bebebe;
-    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.4);
+    border: 3px solid #d4d4d4;
 
 }
 
-#taggie{border-radius: 3px;}
+#taggie{
+    border-radius: 10px;
+    padding: 4px;
+    margin-top: 16px;
+    font-size: 14px;
+}
 
 #create-tags-form{
     text-align: center;
@@ -391,6 +443,7 @@ header #title{
     border: 1px solid rgb(179, 179, 179);
     border-radius: 3px;
     padding: 2px;
+    font-family: var(--font_family);
     
 }
 .modal-form .edit-tag{
@@ -410,7 +463,7 @@ header #title{
 
 #createTag-btn{
     color: white;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: var(--font_family);
     position: relative;
     bottom: -10px;
     padding: 4px;
@@ -420,9 +473,37 @@ header #title{
     cursor: pointer;
 }
 .tagname-initial{
-    margin-top: 20px;
+    margin-top: 40px;
+}
+#pre-tag{
+    width: fit-content;
+    text-align: center;
+    margin: 0 auto;
+}
+.close{
+    animation-name: slideout;
+    animation-duration: 2s;
 }
 
+@keyframes slidein {
+    from {
+        transform: translate(-103%, -50%)
+    }
+  
+    to {
+        transform: translate(-2%, -50%)
+    }
+  }
+
+  @keyframes slideout {
+    from {
+        transform: translate(-2%, -50%)
+    }
+  
+    to {
+        transform: translate(-103%, -50%)
+    }
+  }
 
 /* ____________________________________________ Task Cards Submenu __*/
 
@@ -469,7 +550,6 @@ header #title{
     border: none;
     visibility: hidden;
     display: none;
-    
 }
 
 .menu-options li img{
@@ -478,7 +558,7 @@ header #title{
 }
 
 .started-task{
-    position: fixed;
+    position: absolute;
     width: fit-content;
     background-color: #000000;
     color: white;
@@ -486,7 +566,7 @@ header #title{
     border-radius: 8px;
     margin: 0 ;
     padding: 2px 6px;
-    background-image: var(--gradienttres);
+    background-image: var(--gradient);
     animation: fondo-anim 10s infinite alternate;
     background-size: 400%;
 
@@ -514,16 +594,13 @@ header #title{
     row-gap: 15px;
 }
 .edit-button-container button {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: var(--font_family); 
     border: 2px solid transparent;
     border-radius: 4px;
     cursor: pointer;
     transition: ease-in-out 0.2s;
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.3);
 }
-.edit-button-container button:hover{
-    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0,0.3);
-}
+
 .cancel-btn{
     background-color: tomato;
     color: white;
@@ -552,12 +629,12 @@ header #title{
     flex-wrap: wrap;
     margin-right: 4px;
     font-size: 13px;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
     border: 1px solid ;
     padding: 2px;
-   
-
+    
 }
+
 
 .tags-card-list{
     position: relative;
@@ -574,7 +651,6 @@ header #title{
     position: relative;
     width: 80vw;
     left: 14%;
-    font-weight: 300;
 }
 
 .empty-message{
@@ -584,7 +660,8 @@ header #title{
     color: #aeaeae;
 }
 .empty-message p{
-    margin: 0;
+    margin: 0 auto;
+    width: fit-content;
 }
 
 .text-drag{
@@ -637,15 +714,21 @@ header #title{
     width: fit-content;
     height: 100px;
     padding: 15px;
-    background-color: #fbfbfb;
+    background-color: #f1f1f1;
     border-radius: 4px;
-    box-shadow: 0 4px 5px rgb(0, 0, 0,0.3);
-    border: 3px solid #949494;
+    border: none;
 }
 .show{
     pointer-events: auto;
     opacity: 1;
-    z-index: 1;
+    z-index: 3;
+    animation-name: slidein;
+    animation-duration: 1s;
+}
+.show-delete-message{
+    pointer-events: auto;
+    opacity: 1;
+    z-index: 3;
 }
 .btn-container{
     position: relative;
@@ -672,7 +755,7 @@ header #title{
 }
 .delete-btn{
     border: 1px solid transparent;
-    background-color: rgb(197, 68, 46);
+    background-color: tomato;
     color: white;
 }
 
@@ -682,10 +765,9 @@ header #title{
     width: 100%;
 }
 .card-deleted-message p{
-    background-color: rgb(31, 162, 255);
+    background-color: rgb(223, 223, 223);
     margin: 0 auto;
     border-radius: 3px;
-    color: rgb(255, 255, 255);
     padding: 5px 8px;
     font-size: 14px;
     font-weight: 500;
@@ -694,7 +776,7 @@ header #title{
 }
 
 .card textarea{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family:var(--font_family); 
     font-weight: 300;
     font-size: 16px;
     margin-top: 15px;
@@ -705,14 +787,138 @@ header #title{
 }
 
 .remove-tagcard-btn{
-    background-color: tomato;
+    background-color: transparent;
     border: none;
     cursor: pointer;
+    padding: 0;
     border-radius: 100%;
     float: left;
     margin-right: 5px;
 }
 
+
+
+.main-container{
+    position: sticky;
+    top: 0;
+    width: 80vw;
+    z-index: 2;
+    
+}
+.main-container button{
+    font-family: var(--font_family);
+    background-color: transparent;
+    border: none;
+    padding: 8px 1px;
+    margin-right: 17px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.main-container .current-tasks-btn{
+   font-weight: 600;
+   
+}
+.main-container .done-tasks-btn{
+    font-weight: 200;
+    color: #959595;
+}
+
+.box-style{
+    position: relative;
+    top: -20px;
+    width: 140px;
+    height: 20px;
+    background: linear-gradient(rgba(255, 255, 255, 0.108), rgb(253, 253, 253));
+    
+}
+.navigation-btn{
+    position: relative;
+    width: 100%;
+    left: 5%;
+    background: linear-gradient( rgb(253, 253, 253) 70%, rgba(255, 255, 255, 0.108));
+    
+}
+
+footer{
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    width: 100vw;
+    padding-top: 80px;
+    color: #a1a1a1;
+}
+footer p{
+    font-weight: 300;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.completed-task{
+    position: absolute;
+    right: 24px;
+}
+.completed-task p{
+    margin: 0;
+    padding: 3px 7px;
+}
+
+
+
+.notification{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    transform: translate(-10%, -40%);
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border: 1px solid rgb(224, 224, 224);
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    padding: 30px 50px;
+    z-index: 4;
+    background-color: rgb(30, 30, 30);
+    opacity: 0;
+}
+.notification p{
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.show-notification{
+    pointer-events: auto;
+    opacity: 1;
+    z-index: 4;
+    animation-name: slideinnotification;
+    animation-duration: 1s;
+}
+
+.close-notification{
+    animation-name: slideoutnotification;
+    animation-duration: 1s;
+}
+
+@keyframes slideinnotification {
+    from {
+        transform: translate(-10%, 100%)
+    }
+  
+    to {
+        transform:translate(-10%, -40%)
+    }
+  }
+
+  @keyframes slideoutnotification {
+    from {
+        transform: translate(-10%, -40%)
+    }
+  
+    to {
+        transform: translate(-10%, -100%)
+    }
+  }
 
 
 
